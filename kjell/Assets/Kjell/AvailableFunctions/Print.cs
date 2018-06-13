@@ -1,6 +1,5 @@
 ﻿using Compiler;
 using Kjell;
-using UnityEngine;
 
 public class Print : Function
 {
@@ -17,7 +16,21 @@ public class Print : Function
 
 	public override Variable runFunction(Scope currentScope, Variable[] inputParas, int lineNumber)
 	{
-		IOStream.Instance.Print(inputParas[0].getString());
+		var message = "";
+
+		foreach (var parameter in inputParas)
+		{
+			if (parameter.variableType == VariableTypes.textString)
+				message += parameter.getString();
+			else if (parameter.variableType == VariableTypes.number)
+				message += parameter.getNumber();
+			else if (parameter.variableType == VariableTypes.boolean)
+				message += parameter.getBool();
+
+			message += " ";
+		}
+
+		IOStream.Instance.Print(message);
 
 		return new Variable();
 	}

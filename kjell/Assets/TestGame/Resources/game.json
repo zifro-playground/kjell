@@ -10,7 +10,8 @@
 			"name": "Scene1",
 			"sceneSettings": {
 				"availableFunctions": [
-					"Print"
+					"Print",
+					"Input"
 				]
 			},
 			"levels": [

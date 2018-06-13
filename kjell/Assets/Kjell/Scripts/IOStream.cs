@@ -2,7 +2,7 @@
 
 namespace Kjell
 {
-	public class IOStream : MonoBehaviour
+	public class IOStream : MonoBehaviour, IPMCompilerStarted, IPMLevelChanged
 	{
 		public GameObject PrintPrefab;
 		public GameObject LabelPrefab;
@@ -18,8 +18,34 @@ namespace Kjell
 
 		public void Print(string message)
 		{
-			var printObject = GameObject.Instantiate(PrintPrefab);
-			
+			var outputObject = Instantiate(PrintPrefab);
+			outputObject.transform.SetParent(gameObject.transform, false);
+
+			var output = outputObject.GetComponent<Output>();
+			output.Text.text = message;
+		}
+
+		public void Input(string message)
+		{
+
+		}
+
+		public void OnPMCompilerStarted()
+		{
+			Clear();
+		}
+
+		public void OnPMLevelChanged()
+		{
+			Clear();
+		}
+
+		private void Clear()
+		{
+			foreach (Transform child in transform)
+			{
+				Destroy(child.gameObject);
+			}
 		}
 	}
 }
