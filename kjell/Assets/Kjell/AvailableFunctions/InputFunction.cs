@@ -1,10 +1,10 @@
 ﻿using Compiler;
 using Kjell;
 
-public class Input : Function
+public class InputFunction : Function
 {
 
-	public Input()
+	public InputFunction()
 	{
 		name = "input";
 		buttonText = "input()";

@@ -1,9 +1,9 @@
 ﻿using Compiler;
 using Kjell;
 
-public class Print : Function
+public class PrintFunction : Function
 {
-	public Print()
+	public PrintFunction()
 	{
 		name = "print";
 		buttonText = "print()";
