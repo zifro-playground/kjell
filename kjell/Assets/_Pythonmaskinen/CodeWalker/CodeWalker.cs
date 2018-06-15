@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using Kjell;
 
 namespace PM
 {
@@ -67,6 +68,7 @@ namespace PM
 
 				try
 				{
+					IOStream.Instance.TestCompiler(IOStream.Instance.LinesWithInput[0]);
 					Runtime.CodeWalker.parseLine();
 				}
 				catch

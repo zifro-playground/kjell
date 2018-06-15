@@ -13,7 +13,7 @@ OcclusionCullingSettings:
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 8
+  serializedVersion: 9
   m_Fog: 0
   m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_FogMode: 3
@@ -39,6 +39,7 @@ RenderSettings:
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
   m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -54,11 +55,10 @@ LightmapSettings:
     m_EnableBakedLightmaps: 1
     m_EnableRealtimeLightmaps: 1
   m_LightmapEditorSettings:
-    serializedVersion: 9
+    serializedVersion: 10
     m_Resolution: 2
     m_BakeResolution: 40
-    m_TextureWidth: 1024
-    m_TextureHeight: 1024
+    m_AtlasSize: 1024
     m_AO: 0
     m_AOMaxDistance: 1
     m_CompAOExponent: 1
@@ -292,7 +292,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3a63e1cf17805946a88ff7227cbf88c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  theRect: {fileID: 1975245382}
+  theRect: {fileID: 0}
   runInEditor: 0
 --- !u!1 &1719778312
 GameObject:
@@ -535,7 +535,7 @@ Prefab:
     - target: {fileID: 224871361368298868, guid: addc02b0d76c3f54ab6e7b672f7f547b,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0.00006866455
+      value: -0.000038146973
       objectReference: {fileID: 0}
     - target: {fileID: 224976065713000986, guid: addc02b0d76c3f54ab6e7b672f7f547b,
         type: 2}
@@ -820,7 +820,7 @@ Prefab:
     - target: {fileID: 224515735607298008, guid: addc02b0d76c3f54ab6e7b672f7f547b,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0.000091552734
+      value: 0.000061035156
       objectReference: {fileID: 0}
     - target: {fileID: 224713648585042596, guid: addc02b0d76c3f54ab6e7b672f7f547b,
         type: 2}
@@ -846,11 +846,11 @@ Prefab:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 224526602956876300, guid: addc02b0d76c3f54ab6e7b672f7f547b,
+        type: 2}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: addc02b0d76c3f54ab6e7b672f7f547b, type: 2}
   m_IsPrefabParent: 0
---- !u!224 &1975245382 stripped
-RectTransform:
-  m_PrefabParentObject: {fileID: 224531274016999284, guid: addc02b0d76c3f54ab6e7b672f7f547b,
-    type: 2}
-  m_PrefabInternal: {fileID: 1975245381}
