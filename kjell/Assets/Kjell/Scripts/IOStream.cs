@@ -96,7 +96,15 @@ namespace Kjell
 			var logic = WordsToLogicParser.determineLogicFromWords(words, 1, Compiler.SyntaxCheck.MainScopeCopy);
 			var variable = SumParser.parseIntoSum(logic, 1, Compiler.SyntaxCheck.MainScopeCopy);
 
-			print(variable.getString());
+			var label = "";
+			if (variable.variableType == VariableTypes.textString)
+				label = variable.getString();
+			else if (variable.variableType == VariableTypes.number)
+				label = variable.getNumber().ToString();
+			else if (variable.variableType == VariableTypes.boolean)
+				label = variable.getBool().ToString();
+
+			print("Input: " + input + " -> " + label);
 		}
 
 		public void Print(string message)
