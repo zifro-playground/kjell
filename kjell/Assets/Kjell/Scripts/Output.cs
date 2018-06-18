@@ -7,14 +7,16 @@ namespace Kjell
 	{
 		public Text Text;
         public Image Image;
+        public float Opacity;
 
         private void Start()
         {
+            print(Text.text);
             // Change the transparency of the output message (0 is transparent, 1 is opaque)
             if (Text.text == "")
             {
                 var tempColor = Image.color;
-                tempColor.a = 0.3f; 
+                tempColor.a = Opacity; 
                 Image.color = tempColor;
             }
         }
