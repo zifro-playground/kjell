@@ -29,10 +29,11 @@ namespace Kjell
 		{
 			var outputObject = Instantiate(PrintPrefab);
 			outputObject.transform.SetParent(gameObject.transform, false);
-
 			var output = outputObject.GetComponent<Output>();
-			output.Text.text = message;
-		}
+            message = message.Replace("\\n","\n");
+            output.Text.text = message;
+            
+        }
 
 		// Parse code and find what lines makes a function call
 		private void FindInputInCode(string code)
@@ -43,10 +44,14 @@ namespace Kjell
 			var lineIndex = 0;
 			foreach (var line in lines)
 			{
-				var inputArgument = ParseInputArgument(line);
-				if (inputArgument != null)
-					LinesWithInput[lineIndex] = inputArgument;
-				lineIndex++;
+                if(!line.Trim().StartsWith("#") && line.Trim() != "")
+                {
+                    var inputArgument = ParseInputArgument(line);
+                    if (inputArgument != null)
+                        LinesWithInput[lineIndex] = inputArgument;
+                    lineIndex++;
+                }
+				
 			}
 		}
 
@@ -60,7 +65,11 @@ namespace Kjell
 
 			while (charIndex < line.Length)
 			{
-				if (line[charIndex - 6] == 'i' && line[charIndex - 5] == 'n' && line[charIndex - 4] == 'p' &&
+                if (line[charIndex - 6] == '#') // oklart (för att bortse från kommentarer)
+                    break;
+
+
+                if (line[charIndex - 6] == 'i' && line[charIndex - 5] == 'n' && line[charIndex - 4] == 'p' &&
 				    line[charIndex - 3] == 'u' && line[charIndex - 2] == 't' && line[charIndex - 1] == '(')
 				{
 					inputInLine = true;
@@ -86,13 +95,15 @@ namespace Kjell
 
 				if (inputInLine && charIndex < line.Length && !char.IsWhiteSpace(line[charIndex]))
 				{
+                    print(line[charIndex]);
 					if (line[charIndex] == ')')
 						PMWrapper.RaiseError(CodeWalker.CurrentLineNumber, "Fel vid input. Det är för många slutparenteser.");
-					else
-						PMWrapper.RaiseError(CodeWalker.CurrentLineNumber, "Fel vid input. Det får inte vara några tecken efter input().");
+                    else if (line[charIndex] == '#') //makes you able to have comments after a line (but the compiler (PM) says its wrong)
+                        break;
+                    else
+                        PMWrapper.RaiseError(CodeWalker.CurrentLineNumber, "Fel vid input. Det får inte vara några tecken efter input().");
 				}
 			}
-
 			if (parenthesisCount >= 0)
 				PMWrapper.RaiseError(CodeWalker.CurrentLineNumber, "Fel antal parenteser. Det är fler startparenteser än slutparenteser");
 
