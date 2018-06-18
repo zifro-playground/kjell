@@ -53,7 +53,7 @@ namespace PM
 			CurrentLineNumber = 0;
 			if (IOStream.Instance.LinesWithInput.ContainsKey(0))
 			{
-				IOStream.Instance.CallInput(0);
+                StartCoroutine(IOStream.Instance.CallInput(0));
 				IsWaitingForInput = true;
 			}
 		}
@@ -83,7 +83,7 @@ namespace PM
 
 					if (IOStream.Instance.LinesWithInput.ContainsKey(CurrentLineNumber + 1))
 					{
-						IOStream.Instance.CallInput(CurrentLineNumber + 1);
+                        StartCoroutine(IOStream.Instance.CallInput(CurrentLineNumber + 1));
 						IsWaitingForInput = true;
 					}
 					CurrentLineNumber++;
