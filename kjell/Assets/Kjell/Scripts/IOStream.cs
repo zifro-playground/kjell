@@ -180,11 +180,13 @@ namespace Kjell
 
         public void OnPMCompilerStopped(HelloCompiler.StopStatus status)
         {
-            var InputValue = new InputValue();
-            if (gameObject.transform.childCount > 0)
-                InputValue = gameObject.transform.GetChild(gameObject.transform.childCount - 1).gameObject.GetComponent<InputValue>();
-            if (InputValue != null)
-                InputValue.SubmitInput();
+	        if (gameObject.transform.childCount > 0)
+	        {
+		        var inputValue = gameObject.transform.GetChild(gameObject.transform.childCount - 1).gameObject.GetComponent<InputValue>();
+		        if (inputValue != null)
+			        inputValue.SubmitInput();
+			}
+                
         }
     }
 }
