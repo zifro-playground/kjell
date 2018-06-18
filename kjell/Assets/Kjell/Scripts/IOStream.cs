@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Kjell
 {
-	public class IOStream : MonoBehaviour, IPMCompilerStarted, IPMLevelChanged
+	public class IOStream : MonoBehaviour, IPMCompilerStarted, IPMLevelChanged, IPMCompilerStopped
 	{
 		public string LatestReadInput;
 
@@ -177,5 +177,14 @@ namespace Kjell
 				Destroy(child.gameObject);
 			}
 		}
-	}
+
+        public void OnPMCompilerStopped(HelloCompiler.StopStatus status)
+        {
+            var InputValue = new InputValue();
+            if (gameObject.transform.childCount > 0)
+                InputValue = gameObject.transform.GetChild(gameObject.transform.childCount - 1).gameObject.GetComponent<InputValue>();
+            if (InputValue != null)
+                InputValue.SubmitInput();
+        }
+    }
 }
