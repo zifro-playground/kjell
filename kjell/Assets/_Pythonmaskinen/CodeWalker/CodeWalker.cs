@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using System.Collections;
 using Kjell;
 
 namespace PM
@@ -31,6 +32,7 @@ namespace PM
 		public static int CurrentLineNumber;
 		public static bool IsWaitingForInput;
 
+        private Coroutine couroutine;
 		private static bool doEndWalker;
 		private static Action<HelloCompiler.StopStatus> stopCompiler;
 
@@ -53,7 +55,7 @@ namespace PM
 			CurrentLineNumber = 0;
 			if (IOStream.Instance.LinesWithInput.ContainsKey(0))
 			{
-                StartCoroutine(IOStream.Instance.CallInput(0));
+                couroutine=StartCoroutine(IOStream.Instance.CallInput(0));
 				IsWaitingForInput = true;
 			}
 		}
@@ -83,7 +85,7 @@ namespace PM
 
 					if (IOStream.Instance.LinesWithInput.ContainsKey(CurrentLineNumber + 1))
 					{
-                        StartCoroutine(IOStream.Instance.CallInput(CurrentLineNumber + 1));
+                        couroutine=StartCoroutine(IOStream.Instance.CallInput(CurrentLineNumber + 1));
 						IsWaitingForInput = true;
 					}
 					CurrentLineNumber++;
@@ -145,6 +147,7 @@ namespace PM
 
 		public void StopWalker()
 		{
+            StopCoroutine(couroutine);
 			SetWalkerUserPaused(false);
 			WalkerRunning = false;
 			enabled = false;
