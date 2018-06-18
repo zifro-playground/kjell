@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Compiler;
@@ -134,9 +135,13 @@ namespace Kjell
 			return label;
 		}
 
-		public void CallInput(int lineNumber)
+        public IEnumerator CallInput(int lineNumber)
 		{
-			if (!LinesWithInput.ContainsKey(lineNumber))
+
+            yield return new WaitForSeconds(PMWrapper.walkerStepTime * PMWrapper.speedMultiplier);
+
+            IDELineMarker.SetWalkerPosition(lineNumber+1);
+            if (!LinesWithInput.ContainsKey(lineNumber))
 				throw new Exception("There is no input on line " + lineNumber);
 
 			var argument = InterpretArgument(LinesWithInput[lineNumber]);
