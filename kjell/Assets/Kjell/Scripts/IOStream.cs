@@ -29,10 +29,11 @@ namespace Kjell
 		{
 			var outputObject = Instantiate(PrintPrefab);
 			outputObject.transform.SetParent(gameObject.transform, false);
-
 			var output = outputObject.GetComponent<Output>();
-			output.Text.text = message;
-		}
+            message = message.Replace("\\n","\n");
+            output.Text.text = message;
+            
+        }
 
 		// Parse code and find what lines makes a function call
 		private void FindInputInCode(string code)
