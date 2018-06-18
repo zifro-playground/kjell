@@ -106,7 +106,7 @@ namespace PM
 		{
 			sleepTimer += Time.deltaTime;
 			float firstInterval = sleepTime - sleepTime / 20;
-			if (sleepTimer > firstInterval)
+            if (sleepTimer > firstInterval && !IsWaitingForInput)
 			{
 				IDELineMarker.instance.SetState(IDELineMarker.State.Hidden);
 				if (sleepTimer > sleepTime)

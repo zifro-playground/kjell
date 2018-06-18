@@ -125,7 +125,10 @@ namespace Kjell
 
 		public void CallInput(int lineNumber)
 		{
-			if (!LinesWithInput.ContainsKey(lineNumber))
+            //placemarker
+            IDELineMarker.SetWalkerPosition(lineNumber+1);
+            //IDELineMarker.instance.SetState(IDELineMarker.State.Walker);
+            if (!LinesWithInput.ContainsKey(lineNumber))
 				throw new Exception("There is no input on line " + lineNumber);
 
 			var argument = InterpretArgument(LinesWithInput[lineNumber]);
