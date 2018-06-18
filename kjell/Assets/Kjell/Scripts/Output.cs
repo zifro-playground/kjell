@@ -11,7 +11,6 @@ namespace Kjell
 
         private void Start()
         {
-            print(Text.text);
             // Change the transparency of the output message (0 is transparent, 1 is opaque)
             if (Text.text == "")
             {
