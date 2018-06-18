@@ -51,6 +51,7 @@ namespace PM
 			doEndWalker = false;
 			stopCompiler = stopCompilerMeth;
 			IsUserPaused = false;
+			IsWaitingForInput = false;
 
 			CurrentLineNumber = 0;
 			if (IOStream.Instance.LinesWithInput.ContainsKey(0))
