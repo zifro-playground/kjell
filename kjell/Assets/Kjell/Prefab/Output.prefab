@@ -62,6 +62,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Text: {fileID: 114470778269320708}
+  Image: {fileID: 114375626640336756}
+  Opacity: 0
 --- !u!114 &114306212275538302
 MonoBehaviour:
   m_ObjectHideFlags: 1
