@@ -362,6 +362,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 449e42f738518fb4e922bf3409b89e4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LatestReadInput: 
   PrintPrefab: {fileID: 1634430851464938, guid: 62eb4ba59c0af7045a234af64c8b1099,
     type: 2}
   LabelPrefab: {fileID: 1096856579346578, guid: 6497fb2cf19ad65489c840badd0d7c9e,
@@ -535,7 +536,7 @@ Prefab:
     - target: {fileID: 224871361368298868, guid: addc02b0d76c3f54ab6e7b672f7f547b,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0.0000076293945
+      value: 0.0001296997
       objectReference: {fileID: 0}
     - target: {fileID: 224976065713000986, guid: addc02b0d76c3f54ab6e7b672f7f547b,
         type: 2}
@@ -815,12 +816,12 @@ Prefab:
     - target: {fileID: 224515735607298008, guid: addc02b0d76c3f54ab6e7b672f7f547b,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 0.000061035156
+      value: 0.000030517578
       objectReference: {fileID: 0}
     - target: {fileID: 224515735607298008, guid: addc02b0d76c3f54ab6e7b672f7f547b,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -0.00012207031
+      value: -0.000015258789
       objectReference: {fileID: 0}
     - target: {fileID: 224713648585042596, guid: addc02b0d76c3f54ab6e7b672f7f547b,
         type: 2}

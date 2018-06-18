@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using PM;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Kjell
@@ -16,6 +17,9 @@ namespace Kjell
             InputField.SetActive(false);
             SendButton.SetActive(false);
             SubmittedText.gameObject.SetActive(true);
+
+	        IOStream.Instance.LatestReadInput = SubmittedText.text;
+	        CodeWalker.IsWaitingForInput = false;
         }
 
         private void Update()

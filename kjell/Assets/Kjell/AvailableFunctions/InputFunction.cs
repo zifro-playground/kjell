@@ -16,6 +16,7 @@ public class InputFunction : Function
 
 	public override Variable runFunction(Scope currentScope, Variable[] inputParas, int lineNumber)
 	{
-		return new Variable("name", "hej");
+		var userInput = IOStream.Instance.LatestReadInput;
+		return new Variable("userInput", userInput);
 	}
 }

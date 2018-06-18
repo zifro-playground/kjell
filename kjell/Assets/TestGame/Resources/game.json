@@ -18,7 +18,7 @@
 				{
 					"id": "abc",
 					"levelSettings": {
-						"startCode": 'x = input("Vad heter du?")',
+						"startCode": "print(\"Hej!\")\nnamn = input(\"Vad heter du?\")\nprint(\"Hej \" + namn)",
 						"rowLimit": 30,
 						"taskDescription": "Prata med programmet."
 					}

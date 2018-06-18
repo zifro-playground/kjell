@@ -28,6 +28,9 @@ namespace PM
 		public static bool WalkerRunning = true;
 		public bool IsUserPaused { get; private set; }
 
+		public static int CurrentLineNumber;
+		public static bool IsWaitingForInput;
+
 		private static bool doEndWalker;
 		private static Action<HelloCompiler.StopStatus> stopCompiler;
 
@@ -46,6 +49,13 @@ namespace PM
 			doEndWalker = false;
 			stopCompiler = stopCompilerMeth;
 			IsUserPaused = false;
+
+			CurrentLineNumber = 0;
+			if (IOStream.Instance.LinesWithInput.ContainsKey(0))
+			{
+				IOStream.Instance.CallInput(0);
+				IsWaitingForInput = true;
+			}
 		}
 		#endregion
 
@@ -56,9 +66,10 @@ namespace PM
 
 		private void Update()
 		{
-			if (IsUserPaused) return;
+			if (IsUserPaused)
+				return;
 
-			if (WalkerRunning && !IsSleeping)
+			if (WalkerRunning && !IsSleeping && !IsWaitingForInput)
 			{
 				if (doEndWalker)
 				{
@@ -68,8 +79,14 @@ namespace PM
 
 				try
 				{
-					IOStream.Instance.TestCompiler(IOStream.Instance.LinesWithInput[0]);
 					Runtime.CodeWalker.parseLine();
+
+					if (IOStream.Instance.LinesWithInput.ContainsKey(CurrentLineNumber + 1))
+					{
+						IOStream.Instance.CallInput(CurrentLineNumber + 1);
+						IsWaitingForInput = true;
+					}
+					CurrentLineNumber++;
 				}
 				catch
 				{

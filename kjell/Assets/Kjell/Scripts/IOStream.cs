@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using Compiler;
+using PM;
 using UnityEngine;
 
 namespace Kjell
 {
 	public class IOStream : MonoBehaviour, IPMCompilerStarted, IPMLevelChanged
 	{
+		public string LatestReadInput;
+
 		public GameObject PrintPrefab;
 		public GameObject LabelPrefab;
 		public GameObject ValuePrefab;
@@ -22,6 +25,16 @@ namespace Kjell
 				Instance = this;
 		}
 
+		public void Print(string message)
+		{
+			var outputObject = Instantiate(PrintPrefab);
+			outputObject.transform.SetParent(gameObject.transform, false);
+
+			var output = outputObject.GetComponent<Output>();
+			output.Text.text = message;
+		}
+
+		// Parse code and find what lines makes a function call
 		private void FindInputInCode(string code)
 		{
 			LinesWithInput = new Dictionary<int, string>();
@@ -32,7 +45,7 @@ namespace Kjell
 			{
 				var inputArgument = ParseInputArgument(line);
 				if (inputArgument != null)
-					LinesWithInput.Add(lineIndex, inputArgument);
+					LinesWithInput[lineIndex] = inputArgument;
 				lineIndex++;
 			}
 		}
@@ -74,14 +87,14 @@ namespace Kjell
 				if (inputInLine && charIndex < line.Length && !char.IsWhiteSpace(line[charIndex]))
 				{
 					if (line[charIndex] == ')')
-						PMWrapper.RaiseError("Fel vid input. Det är för många slutparenteser.");
+						PMWrapper.RaiseError(CodeWalker.CurrentLineNumber, "Fel vid input. Det är för många slutparenteser.");
 					else
-						PMWrapper.RaiseError("Fel vid input. Det får inte vara några tecken efter input().");
+						PMWrapper.RaiseError(CodeWalker.CurrentLineNumber, "Fel vid input. Det får inte vara några tecken efter input().");
 				}
 			}
 
 			if (parenthesisCount >= 0)
-				PMWrapper.RaiseError("Fel antal parenteser. Det är fler startparenteser än slutparenteser");
+				PMWrapper.RaiseError(CodeWalker.CurrentLineNumber, "Fel antal parenteser. Det är fler startparenteser än slutparenteser");
 
 			if (inputInLine)
 				return inputArgument;
@@ -89,9 +102,12 @@ namespace Kjell
 			return null;
 		}
 
-		public void TestCompiler(string input)
+		public string InterpretArgument(string argument)
 		{
-			var lines = Compiler.SyntaxCheck.parseLines(input);
+			if (string.IsNullOrEmpty(argument))
+				return "";
+
+			var lines = Compiler.SyntaxCheck.parseLines(argument);
 			var words = lines.First().words;
 			var logic = WordsToLogicParser.determineLogicFromWords(words, 1, Compiler.SyntaxCheck.MainScopeCopy);
 			var variable = SumParser.parseIntoSum(logic, 1, Compiler.SyntaxCheck.MainScopeCopy);
@@ -104,21 +120,27 @@ namespace Kjell
 			else if (variable.variableType == VariableTypes.boolean)
 				label = variable.getBool().ToString();
 
-			print("Input: " + input + " -> " + label);
+			return label;
 		}
 
-		public void Print(string message)
+		public void CallInput(int lineNumber)
 		{
-			var outputObject = Instantiate(PrintPrefab);
-			outputObject.transform.SetParent(gameObject.transform, false);
+			if (!LinesWithInput.ContainsKey(lineNumber))
+				throw new Exception("There is no input on line " + lineNumber);
 
-			var output = outputObject.GetComponent<Output>();
-			output.Text.text = message;
+			var argument = InterpretArgument(LinesWithInput[lineNumber]);
+			TriggerInput(argument);
 		}
 
-		public void Input(string message)
+		public void TriggerInput(string message)
 		{
+			var labelObject = Instantiate(LabelPrefab);
+			var valueObject = Instantiate(ValuePrefab);
 
+			labelObject.transform.SetParent(gameObject.transform, false);
+			valueObject.transform.SetParent(gameObject.transform, false);
+
+			labelObject.GetComponent<InputLabel>().Text.text = message;
 		}
 
 		public void OnPMCompilerStarted()
