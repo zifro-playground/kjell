@@ -157,7 +157,8 @@ namespace Kjell
 			valueObject.transform.SetParent(gameObject.transform, false);
 
 			labelObject.GetComponent<InputLabel>().Text.text = message;
-		}
+
+        }
 
 		public void OnPMCompilerStarted()
 		{
