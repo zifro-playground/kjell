@@ -27,11 +27,19 @@ public static class PMWrapper
 		set { UISingleton.instance.speed.currentSpeed = value; }
 	}
 
+	/// <summary>
+	/// A base factor in how long it takes for the walker to take one step in the code. 
+	/// It is multiplied with <see cref="speedMultiplier"/> to calculate the actual step time.
+	/// </summary>
 	public static float walkerStepTime
 	{
 		get { return UISingleton.instance.walker.BaseWalkerWaitTime; }
 		set { UISingleton.instance.walker.BaseWalkerWaitTime = value; }
 	}
+
+    public static Level LevelData{
+        get { return Main.Instance.LevelData; }
+    }
 
 	/// <summary>
 	/// The pre code, i.e. the un-changeable code BEFORE the main code.
@@ -111,6 +119,11 @@ public static class PMWrapper
 		UISingleton.instance.textField.InsertMainCodeAtStart(code);
 	}
 
+	public static int CurrentLineNumber
+	{
+		get { return CodeWalker.CurrentLineNumber; }
+	}
+
 	/// <summary>
 	/// Scrolls so that the <paramref name="lineNumber"/> is visible in the IDE.
 	/// </summary>
@@ -136,6 +149,12 @@ public static class PMWrapper
 	/// Boolean representing wether the walker is currently paused by the user (via pressing the pause button).
 	/// </summary>
 	public static bool IsCompilerUserPaused { get { return UISingleton.instance.walker.IsUserPaused; } }
+
+	public static bool IsWaitingForUserInput
+	{
+		get { return CodeWalker.IsWaitingForInput; }
+		set { CodeWalker.IsWaitingForInput = value; }
+	}
 
 	/// <summary>
 	/// Starts the compiler if it's not currently running. Static wrapper for <see cref="HelloCompiler.compileCode"/>
@@ -446,5 +465,4 @@ public static class PMWrapper
 			UISingleton.instance.ideRoot.parent = null;
 		UnityEngine.Object.DontDestroyOnLoad(UISingleton.instance.ideRoot);
 	}
-
 }

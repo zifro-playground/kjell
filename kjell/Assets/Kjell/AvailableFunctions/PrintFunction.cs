@@ -1,4 +1,5 @@
-﻿using Compiler;
+﻿using System.Linq;
+using Compiler;
 using Kjell;
 
 public class PrintFunction : Function
@@ -18,6 +19,7 @@ public class PrintFunction : Function
 	{
 		var message = "";
 
+		var index = 0;
 		foreach (var parameter in inputParas)
 		{
 			if (parameter.variableType == VariableTypes.textString)
@@ -27,7 +29,10 @@ public class PrintFunction : Function
 			else if (parameter.variableType == VariableTypes.boolean)
 				message += parameter.getBool();
 
-			message += " ";
+			if (index < inputParas.Length-1)
+				message += " ";
+
+			index++;
 		}
 
 		IOStream.Instance.Print(message);

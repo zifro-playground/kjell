@@ -9,21 +9,23 @@ using UnityEngine;
 
 namespace Kjell
 {
-	public class IOStream : MonoBehaviour, IPMCompilerStarted, IPMLevelChanged, IPMCompilerStopped
+	public class IOStream : MonoBehaviour, IPMCompilerStarted, IPMLevelChanged, IPMCompilerStopped, IPMLineParsed
 	{
 		public string LatestReadInput;
 
 		public GameObject PrintPrefab;
 		public GameObject LabelPrefab;
 		public GameObject ValuePrefab;
+    
+    public Sprite InputLabelPop;
+    public Sprite InputValuePop;
+    public Sprite InputLabelPlain;
+    public Sprite InputValuePlain;
 
-        public Sprite InputLabelPop;
-        public Sprite InputValuePop;
-        public Sprite InputLabelPlain;
-        public Sprite InputValuePlain;
-
-		private GameObject labelObject;
-        private GameObject valueObject;
+    private GameObject labelObject;
+    private GameObject valueObject;
+    
+		private Coroutine couroutine;
 
 		public Dictionary<int, string> LinesWithInput;
 
@@ -37,12 +39,13 @@ namespace Kjell
 
 		public void Print(string message)
 		{
+			CaseCorrection.NextOutput(message);
+
 			var outputObject = Instantiate(PrintPrefab);
 			outputObject.transform.SetParent(gameObject.transform, false);
 			var output = outputObject.GetComponent<Output>();
             message = message.Replace("\\n","\n");
             output.Text.text = message;
-            
         }
 
 		// Parse code and find what lines makes a function call
@@ -146,8 +149,10 @@ namespace Kjell
 
         public IEnumerator CallInput(int lineNumber)
 		{
-
             yield return new WaitForSeconds(PMWrapper.walkerStepTime * PMWrapper.speedMultiplier);
+
+			if (!PMWrapper.IsCompilerRunning)
+				yield break;
 
             IDELineMarker.SetWalkerPosition(lineNumber+1);
             if (!LinesWithInput.ContainsKey(lineNumber))
@@ -167,15 +172,19 @@ namespace Kjell
 
 			labelObject.GetComponent<InputLabel>().Text.text = message;
 
-            labelObject.GetComponent<InputLabel>().BubbleImage.sprite = InputLabelPop;
-            valueObject.GetComponent<InputValue>().BubbleImage.sprite = InputValuePop;
-        }
-        public void InputSubmitted(string submitedText)
-        {
-            LatestReadInput = submitedText;
-            labelObject.GetComponent<InputLabel>().BubbleImage.sprite = InputLabelPlain;
-            valueObject.GetComponent<InputValue>().BubbleImage.sprite = InputValuePlain;
-        }
+      labelObject.GetComponent<InputLabel>().BubbleImage.sprite = InputLabelPop;
+      valueObject.GetComponent<InputValue>().BubbleImage.sprite = InputValuePop;
+    }
+    
+    public void InputSubmitted(string submitedText)
+    {
+      LatestReadInput = submitedText;
+      labelObject.GetComponent<InputLabel>().BubbleImage.sprite = InputLabelPlain;
+      valueObject.GetComponent<InputValue>().BubbleImage.sprite = InputValuePlain;
+      
+      if (PMWrapper.LevelData.cases[PMWrapper.currentCase].caseDefinition.test != null)
+       CaseCorrection.NextInput(valueObject);
+    }
 
 		public void OnPMCompilerStarted()
 		{
@@ -204,7 +213,18 @@ namespace Kjell
 		        if (inputValue != null)
 			        inputValue.SubmitInput();
 			}
-                
-        }
-    }
+
+			if (couroutine != null)
+				StopCoroutine(couroutine);
+		}
+
+		public void OnPMLineParsed()
+		{
+			if (LinesWithInput.ContainsKey(PMWrapper.CurrentLineNumber + 1))
+			{
+				couroutine = StartCoroutine(CallInput(PMWrapper.CurrentLineNumber + 1));
+				PMWrapper.IsWaitingForUserInput = true;
+			}
+		}
+	}
 }

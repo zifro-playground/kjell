@@ -10,11 +10,19 @@ namespace Kjell
 		public Text InputText;
 
 		public GameObject InputField;
-        public GameObject SendButton;
+    public GameObject SendButton;
 
 		public Image BubbleImage;
 
-        public void SubmitInput()
+		private void Update()
+		{
+			if (Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown(KeyCode.Return))
+			{
+				SubmitInput();
+			}
+		}
+
+		public void SubmitInput()
         {
             SubmittedText.text = InputText.text;
             InputField.SetActive(false);
@@ -25,13 +33,17 @@ namespace Kjell
 	        CodeWalker.IsWaitingForInput = false;
         }
 
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown(KeyCode.Return))  
-            {
-                SubmitInput();
-            }
-        }
+		public void SubmitInput(string message)
+		{
+			SubmittedText.text = message;
+			InputText.text = message;
+			InputField.SetActive(false);
+			SendButton.SetActive(false);
+			SubmittedText.gameObject.SetActive(true);
+
+			IOStream.Instance.InputSubmitted(SubmittedText.text);
+			CodeWalker.IsWaitingForInput = false;
+		}
     }
 
     

@@ -1,7 +1,5 @@
 using UnityEngine;
 using System;
-using System.Collections;
-using Kjell;
 
 namespace PM
 {
@@ -28,11 +26,10 @@ namespace PM
 		public static bool IsSleeping;
 		public static bool WalkerRunning = true;
 		public bool IsUserPaused { get; private set; }
-
-		public static int CurrentLineNumber;
 		public static bool IsWaitingForInput;
 
-        private Coroutine couroutine;
+		public static int CurrentLineNumber;
+		
 		private static bool doEndWalker;
 		private static Action<HelloCompiler.StopStatus> stopCompiler;
 
@@ -46,19 +43,19 @@ namespace PM
 		public void ActivateWalker(Action<HelloCompiler.StopStatus> stopCompilerMeth)
 		{
 			Compiler.SyntaxCheck.CompileCode(PMWrapper.fullCode, EndWalker, PauseWalker, IDELineMarker.activateFunctionCall, IDELineMarker.SetWalkerPosition);
+			stopCompiler = stopCompilerMeth;
+
 			enabled = true;
 			WalkerRunning = true;
 			doEndWalker = false;
-			stopCompiler = stopCompilerMeth;
 			IsUserPaused = false;
 			IsWaitingForInput = false;
 
 			CurrentLineNumber = 0;
-			if (IOStream.Instance.LinesWithInput.ContainsKey(0))
-			{
-                couroutine=StartCoroutine(IOStream.Instance.CallInput(0));
-				IsWaitingForInput = true;
-			}
+
+			// Call event
+			foreach (var ev in UISingleton.FindInterfaces<IPMActivateWalker>())
+				ev.OnPMActivateWalker();
 		}
 		#endregion
 
@@ -69,8 +66,7 @@ namespace PM
 
 		private void Update()
 		{
-			if (IsUserPaused)
-				return;
+			if (IsUserPaused) return;
 
 			if (WalkerRunning && !IsSleeping && !IsWaitingForInput)
 			{
@@ -84,11 +80,10 @@ namespace PM
 				{
 					Runtime.CodeWalker.parseLine();
 
-					if (IOStream.Instance.LinesWithInput.ContainsKey(CurrentLineNumber + 1))
-					{
-                        couroutine=StartCoroutine(IOStream.Instance.CallInput(CurrentLineNumber + 1));
-						IsWaitingForInput = true;
-					}
+					// Call event
+					foreach (var ev in UISingleton.FindInterfaces<IPMLineParsed>())
+						ev.OnPMLineParsed();
+
 					CurrentLineNumber++;
 				}
 				catch
@@ -109,7 +104,7 @@ namespace PM
 		{
 			sleepTimer += Time.deltaTime;
 			float firstInterval = sleepTime - sleepTime / 20;
-            if (sleepTimer > firstInterval && !IsWaitingForInput)
+			if (sleepTimer > firstInterval && !IsWaitingForInput)
 			{
 				IDELineMarker.instance.SetState(IDELineMarker.State.Hidden);
 				if (sleepTimer > sleepTime)
@@ -148,7 +143,6 @@ namespace PM
 
 		public void StopWalker()
 		{
-            StopCoroutine(couroutine);
 			SetWalkerUserPaused(false);
 			WalkerRunning = false;
 			enabled = false;
