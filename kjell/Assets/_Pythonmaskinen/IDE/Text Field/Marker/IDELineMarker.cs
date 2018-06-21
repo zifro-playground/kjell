@@ -6,7 +6,7 @@ namespace PM {
 	public class IDELineMarker : MonoBehaviour, IPMCompilerStopped, IPMCompilerStarted {
 		
 		public IDEErrorBubble theErrorBubble;
-        private RectTransform theMarkerRect;
+		private RectTransform theMarkerRect;
 		private IDEFocusLord theFocusLord;
 		private IDETextField theTextField;
 

@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Kjell
 {
-	public class IOStream : MonoBehaviour, IPMCompilerStarted, IPMLevelChanged, IPMCompilerStopped
+	public class IOStream : MonoBehaviour, IPMCompilerStarted, IPMLevelChanged, IPMCompilerStopped, IPMLineParsed
 	{
 		public string LatestReadInput;
 
@@ -16,6 +16,7 @@ namespace Kjell
 		public GameObject LabelPrefab;
 		public GameObject ValuePrefab;
 
+		private Coroutine couroutine;
 		public Dictionary<int, string> LinesWithInput;
 
 		public static IOStream Instance;
@@ -161,7 +162,7 @@ namespace Kjell
 
 			labelObject.GetComponent<InputLabel>().Text.text = message;
 
-			if (Main.Instance.LevelData.cases[PMWrapper.currentCase].caseDefinition.test != null)
+			if (PMWrapper.LevelData.cases[PMWrapper.currentCase].caseDefinition.test != null)
 				CaseCorrection.NextInput(valueObject);
 		}
 
@@ -192,7 +193,18 @@ namespace Kjell
 		        if (inputValue != null)
 			        inputValue.SubmitInput();
 			}
-                
-        }
-    }
+
+			if (couroutine != null)
+				StopCoroutine(couroutine);
+		}
+
+		public void OnPMLineParsed()
+		{
+			if (LinesWithInput.ContainsKey(PMWrapper.CurrentLineNumber + 1))
+			{
+				couroutine = StartCoroutine(CallInput(PMWrapper.CurrentLineNumber + 1));
+				PMWrapper.IsWaitingForUserInput = true;
+			}
+		}
+	}
 }

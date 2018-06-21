@@ -14,7 +14,7 @@ public class CaseCorrection : MonoBehaviour, IPMCaseSwitched, IPMCompilerStopped
 
 	public static void NextInput(GameObject inputValueObject)
 	{
-		if (Main.Instance.LevelData.cases[PMWrapper.currentCase].caseDefinition.test != null)
+		if (PMWrapper.LevelData.cases[PMWrapper.currentCase].caseDefinition.test != null)
 		{
 			if (inputs == null || inputs.Count == 0)
 				PMWrapper.RaiseTaskError("För många input. Jag förväntade mig ingen input.");
@@ -33,7 +33,7 @@ public class CaseCorrection : MonoBehaviour, IPMCaseSwitched, IPMCompilerStopped
 
 	public static void NextOutput(string output)
 	{
-		if (Main.Instance.LevelData.cases[PMWrapper.currentCase].caseDefinition.test != null)
+		if (PMWrapper.LevelData.cases[PMWrapper.currentCase].caseDefinition.test != null)
 		{
 			if (outputIndex > outputs.Count - 1)
 				PMWrapper.RaiseTaskError("För många print. Jag förväntade mig bara " + outputs.Count + " print.");
@@ -47,13 +47,13 @@ public class CaseCorrection : MonoBehaviour, IPMCaseSwitched, IPMCompilerStopped
 
 	public void OnPMCaseSwitched(int caseNumber)
 	{
-		if (Main.Instance.LevelData.cases[caseNumber].caseDefinition.test != null)
+		if (PMWrapper.LevelData.cases[caseNumber].caseDefinition.test != null)
 		{
 			inputIndex = 0;
-			inputs = Main.Instance.LevelData.cases[caseNumber].caseDefinition.test.input;
+			inputs = PMWrapper.LevelData.cases[caseNumber].caseDefinition.test.input;
 
 			outputIndex = 0;
-			outputs = Main.Instance.LevelData.cases[caseNumber].caseDefinition.test.output;
+			outputs = PMWrapper.LevelData.cases[caseNumber].caseDefinition.test.output;
 
 			if (outputs == null || outputs.Count == 0)
 				throw new Exception("There is a test defined but no output defined.");

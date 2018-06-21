@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 public class ActiveLevel
 {
@@ -29,6 +28,10 @@ public class LevelSettings
 	public List<string> availableFunctions { get; set; }
 }
 
+/// <summary>
+/// Can be used to specify custom level definitions in json. 
+/// Should be implemented as partial class in file outside of _Pythonmaskinen.
+/// </summary>
 public partial class LevelDefinition
 {
 }
@@ -38,6 +41,11 @@ public class CaseSettings
 	public string precode { get; set; }
 	public float walkerStepTime { get; set; }
 }
+
+/// <summary>
+/// Can be used to specify custom case definitions in json. 
+/// Should be implemented as partial class in file outside of _Pythonmaskinen.
+/// </summary>
 public partial class CaseDefinition
 {
 }
