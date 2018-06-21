@@ -25,10 +25,7 @@
 					"cases": [
 						{
 							"caseDefinition": {
-								"test": {
-									"input": [ "4", "8" ],
-									"output": [ "12" ]
-								}
+								
 							}
 						},
 						{
