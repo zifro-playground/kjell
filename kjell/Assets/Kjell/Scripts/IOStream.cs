@@ -9,22 +9,22 @@ using UnityEngine;
 
 namespace Kjell
 {
-	public class IOStream : MonoBehaviour, IPMCompilerStarted, IPMLevelChanged, IPMCompilerStopped, IPMLineParsed
+	public class IOStream : MonoBehaviour, IPMCompilerStarted, IPMLevelChanged, IPMCompilerStopped, IPMLineParsed, IPMActivateWalker
 	{
 		public string LatestReadInput;
 
 		public GameObject PrintPrefab;
 		public GameObject LabelPrefab;
 		public GameObject ValuePrefab;
-    
-    public Sprite InputLabelPop;
-    public Sprite InputValuePop;
-    public Sprite InputLabelPlain;
-    public Sprite InputValuePlain;
 
-    private GameObject labelObject;
-    private GameObject valueObject;
-    
+		public Sprite InputLabelPop;
+		public Sprite InputValuePop;
+		public Sprite InputLabelPlain;
+		public Sprite InputValuePlain;
+
+		private GameObject labelObject;
+		private GameObject valueObject;
+
 		private Coroutine couroutine;
 
 		public Dictionary<int, string> LinesWithInput;
@@ -44,9 +44,9 @@ namespace Kjell
 			var outputObject = Instantiate(PrintPrefab);
 			outputObject.transform.SetParent(gameObject.transform, false);
 			var output = outputObject.GetComponent<Output>();
-            message = message.Replace("\\n","\n");
-            output.Text.text = message;
-        }
+			message = message.Replace("\\n", "\n");
+			output.Text.text = message;
+		}
 
 		// Parse code and find what lines makes a function call
 		private void FindInputInCode(string code)
@@ -57,14 +57,14 @@ namespace Kjell
 			var lineIndex = 0;
 			foreach (var line in lines)
 			{
-                if(!line.Trim().StartsWith("#") && line.Trim() != "")
-                {
-                    var inputArgument = ParseInputArgument(line);
-                    if (inputArgument != null)
-                        LinesWithInput[lineIndex] = inputArgument;
-                    lineIndex++;
-                }
-				
+				if (!line.Trim().StartsWith("#") && line.Trim() != "")
+				{
+					var inputArgument = ParseInputArgument(line);
+					if (inputArgument != null)
+						LinesWithInput[lineIndex] = inputArgument;
+					lineIndex++;
+				}
+
 			}
 		}
 
@@ -78,12 +78,12 @@ namespace Kjell
 
 			while (charIndex < line.Length)
 			{
-                if (line[charIndex - 6] == '#') // oklart (för att bortse från kommentarer)
-                    break;
+				if (line[charIndex - 6] == '#') // oklart (för att bortse från kommentarer)
+					break;
 
 
-                if (line[charIndex - 6] == 'i' && line[charIndex - 5] == 'n' && line[charIndex - 4] == 'p' &&
-				    line[charIndex - 3] == 'u' && line[charIndex - 2] == 't' && line[charIndex - 1] == '(')
+				if (line[charIndex - 6] == 'i' && line[charIndex - 5] == 'n' && line[charIndex - 4] == 'p' &&
+					line[charIndex - 3] == 'u' && line[charIndex - 2] == 't' && line[charIndex - 1] == '(')
 				{
 					inputInLine = true;
 					parenthesisCount = 0;
@@ -108,13 +108,13 @@ namespace Kjell
 
 				if (inputInLine && charIndex < line.Length && !char.IsWhiteSpace(line[charIndex]))
 				{
-                    print(line[charIndex]);
+					print(line[charIndex]);
 					if (line[charIndex] == ')')
 						PMWrapper.RaiseError(CodeWalker.CurrentLineNumber, "Fel vid input. Det är för många slutparenteser.");
-                    else if (line[charIndex] == '#') //makes you able to have comments after a line (but the compiler (PM) says its wrong)
-                        break;
-                    else
-                        PMWrapper.RaiseError(CodeWalker.CurrentLineNumber, "Fel vid input. Det får inte vara några tecken efter input().");
+					else if (line[charIndex] == '#') //makes you able to have comments after a line (but the compiler (PM) says its wrong)
+						break;
+					else
+						PMWrapper.RaiseError(CodeWalker.CurrentLineNumber, "Fel vid input. Det får inte vara några tecken efter input().");
 				}
 			}
 			if (parenthesisCount >= 0)
@@ -147,15 +147,15 @@ namespace Kjell
 			return label;
 		}
 
-        public IEnumerator CallInput(int lineNumber)
+		public IEnumerator CallInput(int lineNumber)
 		{
-            yield return new WaitForSeconds(PMWrapper.walkerStepTime * PMWrapper.speedMultiplier);
+			yield return new WaitForSeconds(PMWrapper.walkerStepTime * (1 - PMWrapper.speedMultiplier));
 
 			if (!PMWrapper.IsCompilerRunning)
 				yield break;
 
-            IDELineMarker.SetWalkerPosition(lineNumber+1);
-            if (!LinesWithInput.ContainsKey(lineNumber))
+			IDELineMarker.SetWalkerPosition(lineNumber + 1);
+			if (!LinesWithInput.ContainsKey(lineNumber))
 				throw new Exception("There is no input on line " + lineNumber);
 
 			var argument = InterpretArgument(LinesWithInput[lineNumber]);
@@ -172,19 +172,19 @@ namespace Kjell
 
 			labelObject.GetComponent<InputLabel>().Text.text = message;
 
-      labelObject.GetComponent<InputLabel>().BubbleImage.sprite = InputLabelPop;
-      valueObject.GetComponent<InputValue>().BubbleImage.sprite = InputValuePop;
-    }
-    
-    public void InputSubmitted(string submitedText)
-    {
-      LatestReadInput = submitedText;
-      labelObject.GetComponent<InputLabel>().BubbleImage.sprite = InputLabelPlain;
-      valueObject.GetComponent<InputValue>().BubbleImage.sprite = InputValuePlain;
-      
-      if (PMWrapper.LevelData.cases[PMWrapper.currentCase].caseDefinition.test != null)
-       CaseCorrection.NextInput(valueObject);
-    }
+			labelObject.GetComponent<InputLabel>().BubbleImage.sprite = InputLabelPop;
+			valueObject.GetComponent<InputValue>().BubbleImage.sprite = InputValuePop;
+
+			if (Main.Instance.LevelData.cases[PMWrapper.currentCase].caseDefinition.test != null)
+				CaseCorrection.NextInput(valueObject);
+		}
+
+		public void InputSubmitted(string submitedText)
+		{
+			LatestReadInput = submitedText;
+			labelObject.GetComponent<InputLabel>().BubbleImage.sprite = InputLabelPlain;
+			valueObject.GetComponent<InputValue>().BubbleImage.sprite = InputValuePlain;
+		}
 
 		public void OnPMCompilerStarted()
 		{
@@ -205,13 +205,13 @@ namespace Kjell
 			}
 		}
 
-        public void OnPMCompilerStopped(HelloCompiler.StopStatus status)
-        {
-	        if (gameObject.transform.childCount > 0)
-	        {
-		        var inputValue = gameObject.transform.GetChild(gameObject.transform.childCount - 1).gameObject.GetComponent<InputValue>();
-		        if (inputValue != null)
-			        inputValue.SubmitInput();
+		public void OnPMCompilerStopped(HelloCompiler.StopStatus status)
+		{
+			if (gameObject.transform.childCount > 0)
+			{
+				var inputValue = gameObject.transform.GetChild(gameObject.transform.childCount - 1).gameObject.GetComponent<InputValue>();
+				if (inputValue != null)
+					inputValue.SubmitInput();
 			}
 
 			if (couroutine != null)
@@ -223,6 +223,15 @@ namespace Kjell
 			if (LinesWithInput.ContainsKey(PMWrapper.CurrentLineNumber + 1))
 			{
 				couroutine = StartCoroutine(CallInput(PMWrapper.CurrentLineNumber + 1));
+				PMWrapper.IsWaitingForUserInput = true;
+			}
+		}
+
+		public void OnPMActivateWalker()
+		{
+			if (LinesWithInput.ContainsKey(0))
+			{
+				couroutine = StartCoroutine(CallInput(0));
 				PMWrapper.IsWaitingForUserInput = true;
 			}
 		}

@@ -68,6 +68,8 @@ public class CaseCorrection : MonoBehaviour, IPMCaseSwitched, IPMCompilerStopped
 				PMWrapper.RaiseTaskError("För få input. Jag förväntade mig " + inputs.Count + " input.");
 			else if (outputs != null && outputIndex < outputs.Count)
 				PMWrapper.RaiseTaskError("För få print. Jag förväntade mig " + outputs.Count + " print.");
+			else
+				PMWrapper.SetCaseCompleted();
 		}
 	}
 }

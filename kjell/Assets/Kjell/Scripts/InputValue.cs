@@ -10,7 +10,7 @@ namespace Kjell
 		public Text InputText;
 
 		public GameObject InputField;
-    public GameObject SendButton;
+		public GameObject SendButton;
 
 		public Image BubbleImage;
 
@@ -30,7 +30,7 @@ namespace Kjell
             SubmittedText.gameObject.SetActive(true);
 
             IOStream.Instance.InputSubmitted(SubmittedText.text);
-	        CodeWalker.IsWaitingForInput = false;
+	        PMWrapper.IsWaitingForUserInput = false;
         }
 
 		public void SubmitInput(string message)
