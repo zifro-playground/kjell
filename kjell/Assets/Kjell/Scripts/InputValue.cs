@@ -11,7 +11,15 @@ namespace Kjell
 		public GameObject InputField;
         public GameObject SendButton;
 
-        public void SubmitInput()
+		private void Update()
+		{
+			if (Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown(KeyCode.Return))
+			{
+				SubmitInput();
+			}
+		}
+
+		public void SubmitInput()
         {
             SubmittedText.text = InputText.text;
             InputField.SetActive(false);
@@ -22,13 +30,17 @@ namespace Kjell
 	        CodeWalker.IsWaitingForInput = false;
         }
 
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown(KeyCode.Return))  
-            {
-                SubmitInput();
-            }
-        }
+		public void SubmitInput(string message)
+		{
+			SubmittedText.text = message;
+			InputText.text = message;
+			InputField.SetActive(false);
+			SendButton.SetActive(false);
+			SubmittedText.gameObject.SetActive(true);
+
+			IOStream.Instance.LatestReadInput = SubmittedText.text;
+			CodeWalker.IsWaitingForInput = false;
+		}
     }
 
     

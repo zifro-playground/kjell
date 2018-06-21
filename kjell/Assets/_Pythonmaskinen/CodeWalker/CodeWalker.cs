@@ -148,7 +148,9 @@ namespace PM
 
 		public void StopWalker()
 		{
-            StopCoroutine(couroutine);
+			if (couroutine != null)
+				StopCoroutine(couroutine);
+
 			SetWalkerUserPaused(false);
 			WalkerRunning = false;
 			enabled = false;

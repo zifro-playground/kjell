@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 public class ActiveLevel
 {
@@ -28,9 +29,8 @@ public class LevelSettings
 	public List<string> availableFunctions { get; set; }
 }
 
-public class LevelDefinition
+public partial class LevelDefinition
 {
-	public string correctAnswer { get; set; }
 }
 
 public class CaseSettings
@@ -38,10 +38,8 @@ public class CaseSettings
 	public string precode { get; set; }
 	public float walkerStepTime { get; set; }
 }
-
-public class CaseDefinition
+public partial class CaseDefinition
 {
-	public string correctAnswer { get; set; }
 }
 
 public class Case

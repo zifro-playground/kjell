@@ -28,12 +28,13 @@ namespace Kjell
 
 		public void Print(string message)
 		{
+			CaseCorrection.NextOutput(message);
+
 			var outputObject = Instantiate(PrintPrefab);
 			outputObject.transform.SetParent(gameObject.transform, false);
 			var output = outputObject.GetComponent<Output>();
             message = message.Replace("\\n","\n");
             output.Text.text = message;
-            
         }
 
 		// Parse code and find what lines makes a function call
@@ -137,8 +138,10 @@ namespace Kjell
 
         public IEnumerator CallInput(int lineNumber)
 		{
-
             yield return new WaitForSeconds(PMWrapper.walkerStepTime * PMWrapper.speedMultiplier);
+
+			if (!PMWrapper.IsCompilerRunning)
+				yield break;
 
             IDELineMarker.SetWalkerPosition(lineNumber+1);
             if (!LinesWithInput.ContainsKey(lineNumber))
@@ -157,6 +160,9 @@ namespace Kjell
 			valueObject.transform.SetParent(gameObject.transform, false);
 
 			labelObject.GetComponent<InputLabel>().Text.text = message;
+
+			if (Main.Instance.LevelData.cases[PMWrapper.currentCase].caseDefinition.test != null)
+				CaseCorrection.NextInput(valueObject);
 		}
 
 		public void OnPMCompilerStarted()
