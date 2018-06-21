@@ -16,12 +16,14 @@ namespace Kjell
 		public GameObject PrintPrefab;
 		public GameObject LabelPrefab;
 		public GameObject ValuePrefab;
+
         public Sprite InputLabelPop;
         public Sprite InputValuePop;
         public Sprite InputLabelPlain;
         public Sprite InputValuePlain;
-        public GameObject labelObject;
-        public GameObject valueObject;
+
+		private GameObject labelObject;
+        private GameObject valueObject;
 
 		public Dictionary<int, string> LinesWithInput;
 
@@ -167,8 +169,6 @@ namespace Kjell
 
             labelObject.GetComponent<InputLabel>().BubbleImage.sprite = InputLabelPop;
             valueObject.GetComponent<InputValue>().BubbleImage.sprite = InputValuePop;
-                
-
         }
         public void InputSubmitted(string submitedText)
         {
