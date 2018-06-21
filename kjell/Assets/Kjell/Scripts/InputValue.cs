@@ -8,8 +8,11 @@ namespace Kjell
 	{
 		public Text SubmittedText;
 		public Text InputText;
+
 		public GameObject InputField;
-        public GameObject SendButton;
+    public GameObject SendButton;
+
+		public Image BubbleImage;
 
 		private void Update()
 		{
@@ -26,7 +29,7 @@ namespace Kjell
             SendButton.SetActive(false);
             SubmittedText.gameObject.SetActive(true);
 
-	        IOStream.Instance.LatestReadInput = SubmittedText.text;
+            IOStream.Instance.InputSubmitted(SubmittedText.text);
 	        CodeWalker.IsWaitingForInput = false;
         }
 
@@ -38,7 +41,7 @@ namespace Kjell
 			SendButton.SetActive(false);
 			SubmittedText.gameObject.SetActive(true);
 
-			IOStream.Instance.LatestReadInput = SubmittedText.text;
+			IOStream.Instance.InputSubmitted(SubmittedText.text);
 			CodeWalker.IsWaitingForInput = false;
 		}
     }

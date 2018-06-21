@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.5748171, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -729,7 +729,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 17, y: -262.69592}
+  m_AnchoredPosition: {x: 17, y: -262.69595}
   m_SizeDelta: {x: 400, y: 0}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1719778314
@@ -770,8 +770,12 @@ MonoBehaviour:
     type: 2}
   LabelPrefab: {fileID: 1096856579346578, guid: 6497fb2cf19ad65489c840badd0d7c9e,
     type: 2}
-  ValuePrefab: {fileID: 1957397319615112, guid: 680c88849904b924889086d741d4e0e7,
+  ValuePrefab: {fileID: 1879541753700750, guid: 680c88849904b924889086d741d4e0e7,
     type: 2}
+  InputLabelPop: {fileID: 21300000, guid: 7cb97a8ec9c134e899ce195cbc02ca40, type: 3}
+  InputValuePop: {fileID: 21300000, guid: 56535450c5766484e8a3b2fbab7fbe8c, type: 3}
+  InputLabelPlain: {fileID: 21300000, guid: e299d8d0163b498428004bf6510616c3, type: 3}
+  InputValuePlain: {fileID: 21300000, guid: aea3743ceb1a1404088e18a36f51f870, type: 3}
 --- !u!114 &1719778316
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -957,7 +961,7 @@ Prefab:
     - target: {fileID: 224871361368298868, guid: addc02b0d76c3f54ab6e7b672f7f547b,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -0.000038146973
+      value: 0.00008392334
       objectReference: {fileID: 0}
     - target: {fileID: 224976065713000986, guid: addc02b0d76c3f54ab6e7b672f7f547b,
         type: 2}
@@ -1237,12 +1241,12 @@ Prefab:
     - target: {fileID: 224515735607298008, guid: addc02b0d76c3f54ab6e7b672f7f547b,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 0.000030517578
+      value: -0.000061035156
       objectReference: {fileID: 0}
     - target: {fileID: 224515735607298008, guid: addc02b0d76c3f54ab6e7b672f7f547b,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -0.00012207031
+      value: 0.000091552734
       objectReference: {fileID: 0}
     - target: {fileID: 224713648585042596, guid: addc02b0d76c3f54ab6e7b672f7f547b,
         type: 2}

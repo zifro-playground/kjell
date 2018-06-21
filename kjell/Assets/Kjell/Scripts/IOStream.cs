@@ -6,6 +6,7 @@ using Compiler;
 using PM;
 using UnityEngine;
 
+
 namespace Kjell
 {
 	public class IOStream : MonoBehaviour, IPMCompilerStarted, IPMLevelChanged, IPMCompilerStopped, IPMLineParsed
@@ -15,8 +16,17 @@ namespace Kjell
 		public GameObject PrintPrefab;
 		public GameObject LabelPrefab;
 		public GameObject ValuePrefab;
+    
+    public Sprite InputLabelPop;
+    public Sprite InputValuePop;
+    public Sprite InputLabelPlain;
+    public Sprite InputValuePlain;
 
+    private GameObject labelObject;
+    private GameObject valueObject;
+    
 		private Coroutine couroutine;
+
 		public Dictionary<int, string> LinesWithInput;
 
 		public static IOStream Instance;
@@ -154,17 +164,27 @@ namespace Kjell
 
 		public void TriggerInput(string message)
 		{
-			var labelObject = Instantiate(LabelPrefab);
-			var valueObject = Instantiate(ValuePrefab);
+			labelObject = Instantiate(LabelPrefab);
+			valueObject = Instantiate(ValuePrefab);
 
 			labelObject.transform.SetParent(gameObject.transform, false);
 			valueObject.transform.SetParent(gameObject.transform, false);
 
 			labelObject.GetComponent<InputLabel>().Text.text = message;
 
-			if (PMWrapper.LevelData.cases[PMWrapper.currentCase].caseDefinition.test != null)
-				CaseCorrection.NextInput(valueObject);
-		}
+      labelObject.GetComponent<InputLabel>().BubbleImage.sprite = InputLabelPop;
+      valueObject.GetComponent<InputValue>().BubbleImage.sprite = InputValuePop;
+    }
+    
+    public void InputSubmitted(string submitedText)
+    {
+      LatestReadInput = submitedText;
+      labelObject.GetComponent<InputLabel>().BubbleImage.sprite = InputLabelPlain;
+      valueObject.GetComponent<InputValue>().BubbleImage.sprite = InputValuePlain;
+      
+      if (PMWrapper.LevelData.cases[PMWrapper.currentCase].caseDefinition.test != null)
+       CaseCorrection.NextInput(valueObject);
+    }
 
 		public void OnPMCompilerStarted()
 		{

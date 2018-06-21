@@ -6,6 +6,7 @@ namespace Kjell
 	public class InputLabel : MonoBehaviour
 	{
 		public Text Text;
+        public Image BubbleImage;
         
         private void Start()
         {
@@ -14,5 +15,6 @@ namespace Kjell
                 Destroy(gameObject);
             }
         }
+
 	}
 }
