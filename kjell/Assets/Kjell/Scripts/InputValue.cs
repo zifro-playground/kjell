@@ -10,6 +10,10 @@ namespace Kjell
 		public Text InputText;
 		public GameObject InputField;
         public GameObject SendButton;
+        public Image BubbleImage;
+        public Sprite PlainValueSprite;
+        public Image InputLabelImage;
+        public Sprite PlainLabelSprite;
 
         public void SubmitInput()
         {
@@ -18,7 +22,11 @@ namespace Kjell
             SendButton.SetActive(false);
             SubmittedText.gameObject.SetActive(true);
 
-	        IOStream.Instance.LatestReadInput = SubmittedText.text;
+            //BubbleImage.sprite = PlainValueSprite;
+            //InputLabelImage.sprite = PlainLabelSprite;
+
+            IOStream.Instance.InputSubmitted(SubmittedText.text);
+	        //LatestReadInput = ;
 	        CodeWalker.IsWaitingForInput = false;
         }
 

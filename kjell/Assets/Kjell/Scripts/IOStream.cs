@@ -6,6 +6,7 @@ using Compiler;
 using PM;
 using UnityEngine;
 
+
 namespace Kjell
 {
 	public class IOStream : MonoBehaviour, IPMCompilerStarted, IPMLevelChanged, IPMCompilerStopped
@@ -15,6 +16,12 @@ namespace Kjell
 		public GameObject PrintPrefab;
 		public GameObject LabelPrefab;
 		public GameObject ValuePrefab;
+        public Sprite InputLabelPop;
+        public Sprite InputValuePop;
+        public Sprite InputLabelPlain;
+        public Sprite InputValuePlain;
+        public GameObject labelObject;
+        public GameObject valueObject;
 
 		public Dictionary<int, string> LinesWithInput;
 
@@ -150,14 +157,24 @@ namespace Kjell
 
 		public void TriggerInput(string message)
 		{
-			var labelObject = Instantiate(LabelPrefab);
-			var valueObject = Instantiate(ValuePrefab);
+			labelObject = Instantiate(LabelPrefab);
+			valueObject = Instantiate(ValuePrefab);
 
 			labelObject.transform.SetParent(gameObject.transform, false);
 			valueObject.transform.SetParent(gameObject.transform, false);
 
 			labelObject.GetComponent<InputLabel>().Text.text = message;
 
+            labelObject.GetComponent<InputLabel>().BubbleImage.sprite = InputLabelPop;
+            valueObject.GetComponent<InputValue>().BubbleImage.sprite = InputValuePop;
+                
+
+        }
+        public void InputSubmitted(string submitedText)
+        {
+            LatestReadInput = submitedText;
+            labelObject.GetComponent<InputLabel>().BubbleImage.sprite = InputLabelPlain;
+            valueObject.GetComponent<InputValue>().BubbleImage.sprite = InputValuePlain;
         }
 
 		public void OnPMCompilerStarted()
