@@ -22,7 +22,7 @@
 				{
 					"id": "abc",
 					"levelSettings": {
-						"startCode": "print(6)\nnamn = input(\"Vad?\")\nprint(\"Hej \" + namn)",
+						"startCode": "print(\"Heeej!\")\nnamn = input(\"Vad?\")\nprint(8)",
 						"rowLimit": 30,
 						"taskDescription": {
 							"header": "Prata med programmet.",
@@ -32,14 +32,9 @@
 					"cases": [
 						{
 							"caseDefinition": {
-
-							}
-						},
-						{
-							"caseDefinition": {
 								"test": {
-									"input": [ "4", "8" ],
-									"output": [ "12" ]
+									"input": ["12", "13"],
+									"output": [ "Hej!", "8" ]
 								}
 							}
 						}

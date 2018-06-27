@@ -24,7 +24,9 @@ namespace Kjell
 
 		public void SubmitInput()
         {
-            SubmittedText.text = InputText.text;
+			if (!string.IsNullOrEmpty(InputText.text))
+				SubmittedText.text = InputText.text;
+
             InputField.SetActive(false);
             SendButton.SetActive(false);
             SubmittedText.gameObject.SetActive(true);

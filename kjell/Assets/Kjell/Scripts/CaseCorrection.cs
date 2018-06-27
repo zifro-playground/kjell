@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using ErrorHandler;
 using Kjell;
 using PM;
 using UnityEngine;
 
-public class CaseCorrection : MonoBehaviour, IPMCaseSwitched, IPMCompilerStopped
+public class CaseCorrection : MonoBehaviour, IPMCaseSwitched, IPMCompilerStopped, IPMCompilerStarted
 {
 	private static int inputIndex;
 	private static int outputIndex;
@@ -12,15 +13,17 @@ public class CaseCorrection : MonoBehaviour, IPMCaseSwitched, IPMCompilerStopped
 	private static List<string> inputs;
 	private static List<string> outputs;
 
+	private static string errorMessage;
+
 	public static void NextInput(GameObject inputValueObject)
 	{
 		if (PMWrapper.LevelData.cases[PMWrapper.currentCase].caseDefinition.test != null)
 		{
 			if (inputs == null || inputs.Count == 0)
-				PMWrapper.RaiseTaskError("För många input. Jag förväntade mig ingen input.");
+				PMWrapper.RaiseTaskError("Jag förväntade mig inga inmatningar, så nu vet jag inte vad jag ska mata in."); 
 
 			else if (inputIndex > inputs.Count - 1)
-				PMWrapper.RaiseTaskError("För många input. Jag förväntade mig bara " + inputs.Count + " input.");
+				PMWrapper.RaiseTaskError("För många inmatningar. Jag förväntade mig bara " + inputs.Count + " inmatningar.");
 
 			else
 			{
@@ -36,13 +39,76 @@ public class CaseCorrection : MonoBehaviour, IPMCaseSwitched, IPMCompilerStopped
 		if (PMWrapper.LevelData.cases[PMWrapper.currentCase].caseDefinition.test != null)
 		{
 			if (outputIndex > outputs.Count - 1)
-				PMWrapper.RaiseTaskError("För många print. Jag förväntade mig bara " + outputs.Count + " print.");
+				errorMessage = "För många utskrifter. Jag förväntade mig bara " + outputs.Count + " utskrifter.";
 
-			else if (output != outputs[outputIndex])
-				PMWrapper.RaiseTaskError("Fel print.");
+			else if (output != outputs[outputIndex] && string.IsNullOrEmpty(errorMessage))
+			{
+				errorMessage = "Fel i den " + StringifyNumber(outputIndex + 1) + " utskriften. Programmet skrev ut <b>" + output + "</b> men jag förväntade mig <b>" + outputs[outputIndex] + "</b>.";
+			}
 
 			outputIndex++;
 		}
+	}
+
+	private static string StringifyNumber(int number)
+	{
+		var First20 = new List<string>()
+		{
+			"första",
+			"andra",
+			"tredje",
+			"fjärde",
+			"femte",
+			"sjätte",
+			"sjunde",
+			"åttonde",
+			"nionde",
+			"tionde",
+			"elfte",
+			"tolfte",
+			"trettonde",
+			"fjortonde",
+			"femtonde",
+			"sextonde",
+			"sjuttonde",
+			"artonde",
+			"nittonde"
+		};
+		var tensStart = new List<string>()
+		{
+			"tjugo",
+			"trettio",
+			"fyrtio",
+			"femtio",
+			"sextio",
+			"sjuttio",
+			"åttio",
+			"nittio"
+		};
+		var tensEnd = "nde";
+
+		if (number < 1)
+			throw new ArgumentOutOfRangeException("number", "Argument must be greater than 0");
+
+		if (number < 20)
+			return First20[number-1];
+		if (number < 100)
+		{
+			if (number % 10 == 0)
+				return tensStart[number / 10 - 2] + tensEnd;
+			else
+				return tensStart[number / 10 - 2] + First20[number % 10 - 1];
+		}
+		else
+			return number.ToString();
+	}
+
+	private static void CheckTooFewInputs()
+	{
+		if (inputs != null && inputIndex < inputs.Count)
+			errorMessage = "För få inmatningar. Jag förväntade mig " + inputs.Count + " inmatningar.";
+		else if (outputs != null && outputIndex < outputs.Count)
+			errorMessage = "För få utskrifter. Jag förväntade mig " + outputs.Count + " utskrifter.";
 	}
 
 	public void OnPMCaseSwitched(int caseNumber)
@@ -64,12 +130,17 @@ public class CaseCorrection : MonoBehaviour, IPMCaseSwitched, IPMCompilerStopped
 	{
 		if (status == HelloCompiler.StopStatus.Finished)
 		{
-			if (inputs != null && inputIndex < inputs.Count)
-				PMWrapper.RaiseTaskError("För få input. Jag förväntade mig " + inputs.Count + " input.");
-			else if (outputs != null && outputIndex < outputs.Count)
-				PMWrapper.RaiseTaskError("För få print. Jag förväntade mig " + outputs.Count + " print.");
+			CheckTooFewInputs();
+
+			if (!string.IsNullOrEmpty(errorMessage))
+				PMWrapper.RaiseTaskError(errorMessage);
 			else
 				PMWrapper.SetCaseCompleted();
 		}
+	}
+
+	public void OnPMCompilerStarted()
+	{
+		errorMessage = "";
 	}
 }

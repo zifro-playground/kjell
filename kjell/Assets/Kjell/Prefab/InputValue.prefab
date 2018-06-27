@@ -236,10 +236,6 @@ MonoBehaviour:
   InputField: {fileID: 1532355277772402}
   SendButton: {fileID: 1436155195473046}
   BubbleImage: {fileID: 114856438145870914}
-  PlainValueSprite: {fileID: 21300000, guid: aea3743ceb1a1404088e18a36f51f870, type: 3}
-  InputLabelImage: {fileID: 114100365161335762, guid: 6497fb2cf19ad65489c840badd0d7c9e,
-    type: 2}
-  PlainLabelSprite: {fileID: 21300000, guid: e299d8d0163b498428004bf6510616c3, type: 3}
 --- !u!114 &114157725511671920
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -451,7 +447,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: User input
+  m_Text: 
 --- !u!114 &114830070534013380
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -681,7 +677,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 380, y: 0}
+  m_AnchoredPosition: {x: 455, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!224 &224055840916431724
