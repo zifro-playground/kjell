@@ -29,7 +29,7 @@ namespace PM
 		public static bool IsWaitingForInput;
 
 		public static int CurrentLineNumber;
-		
+
 		private static bool doEndWalker;
 		private static Action<HelloCompiler.StopStatus> stopCompiler;
 
