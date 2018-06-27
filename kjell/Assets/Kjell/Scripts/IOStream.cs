@@ -186,17 +186,6 @@ namespace Kjell
 			valueObject.GetComponent<InputValue>().BubbleImage.sprite = InputValuePlain;
 		}
 
-		public void OnPMCompilerStarted()
-		{
-			Clear();
-			FindInputInCode(PMWrapper.fullCode);
-		}
-
-		public void OnPMLevelChanged()
-		{
-			Clear();
-		}
-
 		private void Clear()
 		{
 			foreach (Transform child in transform)
@@ -205,7 +194,7 @@ namespace Kjell
 			}
 		}
 
-		public void OnPMCompilerStopped(HelloCompiler.StopStatus status)
+		private void SubmitLastInput()
 		{
 			if (gameObject.transform.childCount > 0)
 			{
@@ -213,6 +202,23 @@ namespace Kjell
 				if (inputValue != null)
 					inputValue.SubmitInput();
 			}
+		}
+
+		public void OnPMCompilerStarted()
+		{
+			Clear();
+			FindInputInCode(PMWrapper.fullCode);
+		}
+
+		public void OnPMLevelChanged()
+		{
+			SubmitLastInput();
+			Clear();
+		}
+
+		public void OnPMCompilerStopped(HelloCompiler.StopStatus status)
+		{
+			SubmitLastInput();
 
 			if (couroutine != null)
 				StopCoroutine(couroutine);
