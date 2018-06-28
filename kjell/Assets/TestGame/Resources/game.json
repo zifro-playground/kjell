@@ -15,7 +15,8 @@
 			"sceneSettings": {
 				"availableFunctions": [
 					"PrintFunction",
-					"InputFunction"
+					"InputFunction",
+					"RandintFunction"
 				]
 			},
 			"levels": [
@@ -33,7 +34,7 @@
 						{
 							"caseDefinition": {
 								"test": {
-									"input": ["12", "13"],
+									"input": [ "12", "13" ],
 									"output": [ "Hej!", "8" ]
 								}
 							}
