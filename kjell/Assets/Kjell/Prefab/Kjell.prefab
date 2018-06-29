@@ -208,9 +208,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0.500625
-    y: 0.13663389
+    y: 0.16063833
     width: 0.4475
-    height: 0.6848929
+    height: 0.63907194
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -278,8 +278,8 @@ MonoBehaviour:
     type: 2}
   InputLabelPop: {fileID: 21300000, guid: 7cb97a8ec9c134e899ce195cbc02ca40, type: 3}
   InputValuePop: {fileID: 21300000, guid: 56535450c5766484e8a3b2fbab7fbe8c, type: 3}
-  InputLabelPlain: {fileID: 21300000, guid: e299d8d0163b498428004bf6510616c3, type: 3}
-  InputValuePlain: {fileID: 21300000, guid: aea3743ceb1a1404088e18a36f51f870, type: 3}
+  InputLabelPlain: {fileID: 21300000, guid: 64200c1d5913c4db2b7af112ab6fc4fd, type: 3}
+  InputValuePlain: {fileID: 21300000, guid: c3f0137973b3b419b8647b18e3d6a4ce, type: 3}
 --- !u!114 &114201017648231774
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -539,9 +539,9 @@ MonoBehaviour:
     m_Left: 20
     m_Right: 20
     m_Top: 20
-    m_Bottom: 0
+    m_Bottom: 5
   m_ChildAlignment: 6
-  m_Spacing: 10
+  m_Spacing: -5
   m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 1
@@ -631,7 +631,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 10, y: -152.94261}
+  m_AnchoredPosition: {x: 10, y: -152.81308}
   m_SizeDelta: {x: 475, y: 0}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!224 &224458726784665658
