@@ -76,8 +76,7 @@ namespace Kjell
 			labelObject.GetComponent<InputLabel>().BubbleImage.sprite = InputLabelPop;
 			valueObject.GetComponent<InputValue>().BubbleImage.sprite = InputValuePop;
 
-			if (Main.Instance.LevelData.cases[PMWrapper.currentCase].caseDefinition.test != null)
-				CaseCorrection.NextInput(valueObject);
+			CaseCorrection.NextInput(valueObject);
 		}
 
 		public void InputSubmitted(string submitedText)

@@ -7,6 +7,8 @@ using UnityEngine;
 
 public class CaseCorrection : MonoBehaviour, IPMCaseSwitched, IPMCompilerStopped, IPMCompilerStarted
 {
+	public static bool hasTestDefined;
+
 	private static int inputIndex;
 	private static int outputIndex;
 
@@ -17,7 +19,7 @@ public class CaseCorrection : MonoBehaviour, IPMCaseSwitched, IPMCompilerStopped
 
 	public static void NextInput(GameObject inputValueObject)
 	{
-		if (PMWrapper.LevelData.cases[PMWrapper.currentCase].caseDefinition.test != null)
+		if (hasTestDefined)
 		{
 			if (inputs == null || inputs.Count == 0)
 				PMWrapper.RaiseTaskError("Jag förväntade mig inga inmatningar, så nu vet jag inte vad jag ska mata in."); 
@@ -36,7 +38,7 @@ public class CaseCorrection : MonoBehaviour, IPMCaseSwitched, IPMCompilerStopped
 
 	public static void NextOutput(string output)
 	{
-		if (PMWrapper.LevelData.cases[PMWrapper.currentCase].caseDefinition.test != null)
+		if (hasTestDefined)
 		{
 			if (outputIndex > outputs.Count - 1)
 				errorMessage = "För många utskrifter. Jag förväntade mig bara " + outputs.Count + " utskrifter.";
@@ -113,8 +115,10 @@ public class CaseCorrection : MonoBehaviour, IPMCaseSwitched, IPMCompilerStopped
 
 	public void OnPMCaseSwitched(int caseNumber)
 	{
-		if (PMWrapper.LevelData.cases[caseNumber].caseDefinition.test != null)
+		if (PMWrapper.LevelData.cases.Count > 0 && PMWrapper.LevelData.cases[caseNumber].caseDefinition.test != null)
 		{
+			hasTestDefined = true;
+
 			inputIndex = 0;
 			inputs = PMWrapper.LevelData.cases[caseNumber].caseDefinition.test.input;
 
@@ -123,6 +127,14 @@ public class CaseCorrection : MonoBehaviour, IPMCaseSwitched, IPMCompilerStopped
 
 			if (outputs == null || outputs.Count == 0)
 				throw new Exception("There is a test defined but no output defined.");
+		}
+		else
+		{
+			hasTestDefined = false;
+			inputs = null;
+			outputs = null;
+			inputIndex = 0;
+			outputIndex = 0;
 		}
 	}
 
