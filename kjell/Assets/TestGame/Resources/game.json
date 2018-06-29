@@ -7,6 +7,10 @@
 		{
 			"sceneName": "Scene1",
 			"levelId": "bcd"
+		},
+		{
+			"sceneName": "Scene1",
+			"levelId": "cde"
 		}
 	],
 	"scenes": [
@@ -53,9 +57,6 @@
 					},
 					"cases": [
 						{
-							"caseDefinition": {
-
-							}
 						},
 						{
 							"caseDefinition": {
@@ -66,6 +67,17 @@
 							}
 						}
 					]
+				},
+				{
+					"id": "cde",
+					"levelSettings": {
+						"startCode": "print(6)\nnamn = input(\"Vad?\")\nprint(\"Hej \" + namn)",
+						"rowLimit": 30,
+						"taskDescription": {
+							"header": "Prata med programmet.",
+							"body": "Här är en mer utförlig beskrivning..."
+						}
+					}
 				}
 			]
 		}

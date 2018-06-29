@@ -22,7 +22,7 @@ public class CaseCorrection : MonoBehaviour, IPMCaseSwitched, IPMCompilerStopped
 		if (hasTestDefined)
 		{
 			if (inputs == null || inputs.Count == 0)
-				PMWrapper.RaiseTaskError("Jag förväntade mig inga inmatningar, så nu vet jag inte vad jag ska mata in."); 
+				PMWrapper.RaiseTaskError("Jag förväntade mig inga inmatningar, så nu vet jag inte vad jag ska mata in.");
 
 			else if (inputIndex > inputs.Count - 1)
 				PMWrapper.RaiseTaskError("För många inmatningar. Jag förväntade mig bara " + inputs.Count + " inmatningar.");
@@ -44,9 +44,7 @@ public class CaseCorrection : MonoBehaviour, IPMCaseSwitched, IPMCompilerStopped
 				errorMessage = "För många utskrifter. Jag förväntade mig bara " + outputs.Count + " utskrifter.";
 
 			else if (output != outputs[outputIndex] && string.IsNullOrEmpty(errorMessage))
-			{
 				errorMessage = "Fel i den " + StringifyNumber(outputIndex + 1) + " utskriften. Programmet skrev ut <b>" + output + "</b> men jag förväntade mig <b>" + outputs[outputIndex] + "</b>.";
-			}
 
 			outputIndex++;
 		}
@@ -93,7 +91,7 @@ public class CaseCorrection : MonoBehaviour, IPMCaseSwitched, IPMCompilerStopped
 			throw new ArgumentOutOfRangeException("number", "Argument must be greater than 0");
 
 		if (number < 20)
-			return First20[number-1];
+			return First20[number - 1];
 		if (number < 100)
 		{
 			if (number % 10 == 0)
@@ -115,7 +113,10 @@ public class CaseCorrection : MonoBehaviour, IPMCaseSwitched, IPMCompilerStopped
 
 	public void OnPMCaseSwitched(int caseNumber)
 	{
-		if (PMWrapper.LevelData.cases.Count > 0 && PMWrapper.LevelData.cases[caseNumber].caseDefinition.test != null)
+		if (PMWrapper.LevelData.cases != null &&
+			PMWrapper.LevelData.cases.Count > 0 && 
+		    PMWrapper.LevelData.cases[caseNumber].caseDefinition != null && 
+		    PMWrapper.LevelData.cases[caseNumber].caseDefinition.test != null)
 		{
 			hasTestDefined = true;
 
