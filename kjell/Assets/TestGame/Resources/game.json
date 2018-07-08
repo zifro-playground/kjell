@@ -2,6 +2,10 @@
 	"activeLevels": [
 		{
 			"sceneName": "Scene1",
+			"levelId": "efg"
+		},
+		{
+			"sceneName": "Scene1",
 			"levelId": "abc"
 		},
 		{
@@ -24,6 +28,17 @@
 				]
 			},
 			"levels": [
+				{
+					"id": "efg",
+					"levelSettings": {
+						"startCode": "x = 0\nif x == 0:\n\tprint(\"Hej!\")\nelse:\n\tprint(\"Hej!\")\nx = input(\"Vad?\")\nprint(x)",
+						"rowLimit": 30,
+						"taskDescription": {
+							"header": "Prata med programmet.",
+							"body": "Här är en mer utförlig beskrivning..."
+						}
+					}
+				},
 				{
 					"id": "abc",
 					"levelSettings": {
