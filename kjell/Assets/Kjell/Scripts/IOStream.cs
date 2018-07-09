@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using Compiler;
 using PM;
 using UnityEngine;
 
@@ -24,8 +22,6 @@ namespace Kjell
 
 		private GameObject labelObject;
 		private GameObject valueObject;
-
-		private Coroutine couroutine;
 
 		public Dictionary<int, string> LinesWithInput;
 
@@ -60,20 +56,20 @@ namespace Kjell
 				throw new Exception("There is no input on line " + lineNumber);
 
 			var argument = InputParser.InterpretArgument(LinesWithInput[lineNumber]);
-			TriggerInput(argument);
+			StartCoroutine(TriggerInput(argument));
 		}
 
-		public void TriggerInput(string message)
+		public IEnumerator TriggerInput(string message)
 		{
 			labelObject = Instantiate(LabelPrefab);
-			valueObject = Instantiate(ValuePrefab);
-
 			labelObject.transform.SetParent(gameObject.transform, false);
-			valueObject.transform.SetParent(gameObject.transform, false);
-
 			labelObject.GetComponent<InputLabel>().Text.text = message;
-
 			labelObject.GetComponent<InputLabel>().BubbleImage.sprite = InputLabelPop;
+
+			yield return new WaitForSeconds(2 * (1 - PMWrapper.speedMultiplier));
+
+			valueObject = Instantiate(ValuePrefab);
+			valueObject.transform.SetParent(gameObject.transform, false);
 			valueObject.GetComponent<InputValue>().BubbleImage.sprite = InputValuePop;
 
 			CaseCorrection.NextInput(valueObject);
@@ -119,16 +115,14 @@ namespace Kjell
 		public void OnPMCompilerStopped(HelloCompiler.StopStatus status)
 		{
 			SubmitLastInput();
-
-			if (couroutine != null)
-				StopCoroutine(couroutine);
+			StopAllCoroutines();
 		}
 
 		public void OnPMLineParsed()
 		{
 			if (LinesWithInput.ContainsKey(PMWrapper.CurrentLineNumber + 1))
 			{
-				couroutine = StartCoroutine(CallInput(PMWrapper.CurrentLineNumber + 1));
+				StartCoroutine(CallInput(PMWrapper.CurrentLineNumber + 1));
 				PMWrapper.IsWaitingForUserInput = true;
 			}
 		}
@@ -137,7 +131,7 @@ namespace Kjell
 		{
 			if (LinesWithInput.ContainsKey(0))
 			{
-				couroutine = StartCoroutine(CallInput(0));
+				StartCoroutine(CallInput(0));
 				PMWrapper.IsWaitingForUserInput = true;
 			}
 		}
