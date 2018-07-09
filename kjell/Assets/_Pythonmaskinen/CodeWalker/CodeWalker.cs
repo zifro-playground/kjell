@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using Compiler;
 
 namespace PM
 {
@@ -42,7 +43,7 @@ namespace PM
 		/// </summary>
 		public void ActivateWalker(Action<HelloCompiler.StopStatus> stopCompilerMeth)
 		{
-			Compiler.SyntaxCheck.CompileCode(PMWrapper.fullCode, EndWalker, PauseWalker, IDELineMarker.activateFunctionCall, IDELineMarker.SetWalkerPosition);
+			Compiler.SyntaxCheck.CompileCode(PMWrapper.fullCode, EndWalker, PauseWalker, TriggerInput, IDELineMarker.activateFunctionCall, IDELineMarker.SetWalkerPosition);
 			stopCompiler = stopCompilerMeth;
 
 			enabled = true;
@@ -119,7 +120,7 @@ namespace PM
 
 		#region Compiler Methodes
 		//Methods that the CC should be able to call.
-		//We link this to the CC by passing them into the "Runtime.CodeWalker.initCodeWalker" method
+		//We link this to the CC by passing them into the "Runtime.CodeWalker.CompileCode" method
 		public static void EndWalker()
 		{
 			doEndWalker = true;
@@ -129,7 +130,13 @@ namespace PM
 		{
 			WalkerRunning = false;
 		}
+
+		public static void TriggerInput(Action<string, Scope> temp, Scope currentScope)
+		{
+			temp.Invoke("hejsan!", currentScope);
+		}
 		#endregion
+
 
 
 		#region Public Methods
