@@ -32,7 +32,6 @@ namespace Kjell
             SubmittedText.gameObject.SetActive(true);
 
             IOStream.Instance.InputSubmitted(SubmittedText.text);
-	        PMWrapper.IsWaitingForUserInput = false;
         }
 
 		public void SubmitInput(string message)
@@ -44,7 +43,16 @@ namespace Kjell
 			SubmittedText.gameObject.SetActive(true);
 
 			IOStream.Instance.InputSubmitted(SubmittedText.text);
-			CodeWalker.IsWaitingForInput = false;
+		}
+
+		public void DeactivateInputValue()
+		{
+			if (!string.IsNullOrEmpty(InputText.text))
+				SubmittedText.text = InputText.text;
+
+			InputField.SetActive(false);
+			SendButton.SetActive(false);
+			SubmittedText.gameObject.SetActive(true);
 		}
     }
 
