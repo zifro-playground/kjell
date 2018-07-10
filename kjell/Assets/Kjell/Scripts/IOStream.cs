@@ -44,21 +44,6 @@ namespace Kjell
 			output.Text.text = message;
 		}
 
-		//public IEnumerator CallInput(int lineNumber)
-		//{
-		//	yield return new WaitForSeconds(PMWrapper.walkerStepTime * (1 - PMWrapper.speedMultiplier));
-
-		//	if (!PMWrapper.IsCompilerRunning)
-		//		yield break;
-
-		//	IDELineMarker.SetWalkerPosition(lineNumber + 1);
-		//	if (!LinesWithInput.ContainsKey(lineNumber))
-		//		throw new Exception("There is no input on line " + lineNumber);
-
-		//	var argument = InputParser.InterpretArgument(LinesWithInput[lineNumber]);
-		//	StartCoroutine(TriggerInput(argument));
-		//}
-
 		public IEnumerator TriggerInput(string message)
 		{
 			labelObject = Instantiate(LabelPrefab);
@@ -78,10 +63,13 @@ namespace Kjell
 		public void InputSubmitted(string submitedText)
 		{
 			LatestReadInput = submitedText;
-			labelObject.GetComponent<InputLabel>().BubbleImage.sprite = InputLabelPlain;
+
+			if (labelObject != null)
+				labelObject.GetComponent<InputLabel>().BubbleImage.sprite = InputLabelPlain;
+
 			valueObject.GetComponent<InputValue>().BubbleImage.sprite = InputValuePlain;
 
-			CodeWalker.Temp.Invoke(submitedText, CodeWalker.CurrentScope);
+			CodeWalker.SubmitInput.Invoke(submitedText, CodeWalker.CurrentScope);
 			PMWrapper.UnpauseWalker();
 		}
 
@@ -93,50 +81,31 @@ namespace Kjell
 			}
 		}
 
-		private void SubmitLastInput()
+		private void DeactivateLastInput()
 		{
 			if (gameObject.transform.childCount > 0)
 			{
 				var inputValue = gameObject.transform.GetChild(gameObject.transform.childCount - 1).gameObject.GetComponent<InputValue>();
 				if (inputValue != null)
-					inputValue.SubmitInput();
+					inputValue.DeactivateInputValue();
 			}
 		}
 
 		public void OnPMCompilerStarted()
 		{
 			Clear();
-			LinesWithInput = InputParser.FindInputInCode(PMWrapper.fullCode);
 		}
 
 		public void OnPMLevelChanged()
 		{
-			SubmitLastInput();
+			DeactivateLastInput();
 			Clear();
 		}
 
 		public void OnPMCompilerStopped(HelloCompiler.StopStatus status)
 		{
-			SubmitLastInput();
+			DeactivateLastInput();
 			StopAllCoroutines();
 		}
-
-		//public void OnPMLineParsed()
-		//{
-		//	if (LinesWithInput.ContainsKey(PMWrapper.CurrentLineNumber + 1))
-		//	{
-		//		StartCoroutine(CallInput(PMWrapper.CurrentLineNumber + 1));
-		//		PMWrapper.IsWaitingForUserInput = true;
-		//	}
-		//}
-
-		//public void OnPMActivateWalker()
-		//{
-		//	if (LinesWithInput.ContainsKey(0))
-		//	{
-		//		StartCoroutine(CallInput(0));
-		//		PMWrapper.IsWaitingForUserInput = true;
-		//	}
-		//}
 	}
 }

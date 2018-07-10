@@ -8,8 +8,8 @@ public class InputFunction : Function
 	{
 		name = "input";
 		buttonText = "input()";
-		pauseWalker = false;
-		hasReturnVariable = true;
+		pauseWalker = true;
+		hasReturnVariable = false;
 		inputParameterAmount.Add(0);
 		inputParameterAmount.Add(1);
 	}
@@ -30,6 +30,6 @@ public class InputFunction : Function
 
 		IOStream.Instance.StartCoroutine(IOStream.Instance.TriggerInput(inputLabel));
 
-		return new Variable();
+		return new Variable("inputValue", "");
 	}
 }
