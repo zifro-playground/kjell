@@ -28,7 +28,7 @@ public class InputFunction : Function
 				inputLabel = inputParas[0].getString();
 		}
 
-		IOStream.Instance.TriggerInput(inputLabel);
+		IOStream.Instance.StartCoroutine(IOStream.Instance.TriggerInput(inputLabel));
 
 		return new Variable();
 	}

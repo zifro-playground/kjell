@@ -2,11 +2,15 @@
 	"activeLevels": [
 		{
 			"sceneName": "Scene1",
-			"levelId": "efg"
+			"levelId": "glk"
 		},
 		{
 			"sceneName": "Scene1",
 			"levelId": "abc"
+		},
+		{
+			"sceneName": "Scene1",
+			"levelId": "efg"
 		},
 		{
 			"sceneName": "Scene1",
@@ -42,7 +46,7 @@
 				{
 					"id": "abc",
 					"levelSettings": {
-						"startCode": "print(\"Hej!\")\nnamn = input(\"Vad?\")\nprint(8)",
+						"startCode": "print(\"Hej!\")\nålder = int(input(\"Hur gammal är du?\"))\nprint(\"Du är\", ålder)",
 						"rowLimit": 30,
 						"taskDescription": {
 							"header": "Prata med programmet.",
@@ -87,6 +91,17 @@
 					"id": "cde",
 					"levelSettings": {
 						"startCode": "print(6)\nnamn = input(\"Vad?\")\nprint(\"Hej \" + namn)",
+						"rowLimit": 30,
+						"taskDescription": {
+							"header": "Prata med programmet.",
+							"body": "Här är en mer utförlig beskrivning..."
+						}
+					}
+				},
+				{
+					"id": "glk",
+					"levelSettings": {
+						"startCode": "def get():\n\treturn 1\n\nget()",
 						"rowLimit": 30,
 						"taskDescription": {
 							"header": "Prata med programmet.",

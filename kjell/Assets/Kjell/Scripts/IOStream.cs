@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Kjell
 {
-	public class IOStream : MonoBehaviour, IPMCompilerStarted, IPMLevelChanged, IPMCompilerStopped, IPMLineParsed, IPMActivateWalker
+	public class IOStream : MonoBehaviour, IPMCompilerStarted, IPMLevelChanged, IPMCompilerStopped//, IPMLineParsed, IPMActivateWalker
 	{
 		public string LatestReadInput;
 
@@ -44,20 +44,20 @@ namespace Kjell
 			output.Text.text = message;
 		}
 
-		public IEnumerator CallInput(int lineNumber)
-		{
-			yield return new WaitForSeconds(PMWrapper.walkerStepTime * (1 - PMWrapper.speedMultiplier));
+		//public IEnumerator CallInput(int lineNumber)
+		//{
+		//	yield return new WaitForSeconds(PMWrapper.walkerStepTime * (1 - PMWrapper.speedMultiplier));
 
-			if (!PMWrapper.IsCompilerRunning)
-				yield break;
+		//	if (!PMWrapper.IsCompilerRunning)
+		//		yield break;
 
-			IDELineMarker.SetWalkerPosition(lineNumber + 1);
-			if (!LinesWithInput.ContainsKey(lineNumber))
-				throw new Exception("There is no input on line " + lineNumber);
+		//	IDELineMarker.SetWalkerPosition(lineNumber + 1);
+		//	if (!LinesWithInput.ContainsKey(lineNumber))
+		//		throw new Exception("There is no input on line " + lineNumber);
 
-			var argument = InputParser.InterpretArgument(LinesWithInput[lineNumber]);
-			StartCoroutine(TriggerInput(argument));
-		}
+		//	var argument = InputParser.InterpretArgument(LinesWithInput[lineNumber]);
+		//	StartCoroutine(TriggerInput(argument));
+		//}
 
 		public IEnumerator TriggerInput(string message)
 		{
@@ -80,6 +80,9 @@ namespace Kjell
 			LatestReadInput = submitedText;
 			labelObject.GetComponent<InputLabel>().BubbleImage.sprite = InputLabelPlain;
 			valueObject.GetComponent<InputValue>().BubbleImage.sprite = InputValuePlain;
+
+			CodeWalker.Temp.Invoke(submitedText, CodeWalker.CurrentScope);
+			PMWrapper.UnpauseWalker();
 		}
 
 		private void Clear()
@@ -118,22 +121,22 @@ namespace Kjell
 			StopAllCoroutines();
 		}
 
-		public void OnPMLineParsed()
-		{
-			if (LinesWithInput.ContainsKey(PMWrapper.CurrentLineNumber + 1))
-			{
-				StartCoroutine(CallInput(PMWrapper.CurrentLineNumber + 1));
-				PMWrapper.IsWaitingForUserInput = true;
-			}
-		}
+		//public void OnPMLineParsed()
+		//{
+		//	if (LinesWithInput.ContainsKey(PMWrapper.CurrentLineNumber + 1))
+		//	{
+		//		StartCoroutine(CallInput(PMWrapper.CurrentLineNumber + 1));
+		//		PMWrapper.IsWaitingForUserInput = true;
+		//	}
+		//}
 
-		public void OnPMActivateWalker()
-		{
-			if (LinesWithInput.ContainsKey(0))
-			{
-				StartCoroutine(CallInput(0));
-				PMWrapper.IsWaitingForUserInput = true;
-			}
-		}
+		//public void OnPMActivateWalker()
+		//{
+		//	if (LinesWithInput.ContainsKey(0))
+		//	{
+		//		StartCoroutine(CallInput(0));
+		//		PMWrapper.IsWaitingForUserInput = true;
+		//	}
+		//}
 	}
 }

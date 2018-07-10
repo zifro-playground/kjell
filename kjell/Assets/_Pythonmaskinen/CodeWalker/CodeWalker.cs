@@ -31,6 +31,10 @@ namespace PM
 
 		public static int CurrentLineNumber;
 
+		// Special properties
+		public static Scope CurrentScope;
+		public static Action<string, Scope> Temp;
+
 		private static bool doEndWalker;
 		private static Action<HelloCompiler.StopStatus> stopCompiler;
 
@@ -133,7 +137,8 @@ namespace PM
 
 		public static void TriggerInput(Action<string, Scope> temp, Scope currentScope)
 		{
-			temp.Invoke("hejsan!", currentScope);
+			Temp = temp;
+			CurrentScope = currentScope;
 		}
 		#endregion
 
