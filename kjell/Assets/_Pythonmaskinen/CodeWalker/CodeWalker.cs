@@ -27,16 +27,15 @@ namespace PM
 		public static bool IsSleeping;
 		public static bool WalkerRunning = true;
 		public bool IsUserPaused { get; private set; }
-		public static bool IsWaitingForInput;
 
 		public static int CurrentLineNumber;
 
-		// Special properties
-		public static Scope CurrentScope;
-		public static Action<string, Scope> Temp;
-
 		private static bool doEndWalker;
 		private static Action<HelloCompiler.StopStatus> stopCompiler;
+
+		// Properties needed for input connections to compiler 
+		public static Scope CurrentScope;
+		public static Action<string, Scope> SubmitInput;
 
 		//This Script needs to be added to an object in the scene
 		//To start the compiler simply call "ActivateWalker" Method
@@ -47,14 +46,13 @@ namespace PM
 		/// </summary>
 		public void ActivateWalker(Action<HelloCompiler.StopStatus> stopCompilerMeth)
 		{
-			Compiler.SyntaxCheck.CompileCode(PMWrapper.fullCode, EndWalker, PauseWalker, TriggerInput, IDELineMarker.activateFunctionCall, IDELineMarker.SetWalkerPosition);
+			Compiler.SyntaxCheck.CompileCode(PMWrapper.fullCode, EndWalker, PauseWalker, LinkInputSubmitter, IDELineMarker.activateFunctionCall, IDELineMarker.SetWalkerPosition);
 			stopCompiler = stopCompilerMeth;
 
 			enabled = true;
 			WalkerRunning = true;
 			doEndWalker = false;
 			IsUserPaused = false;
-			IsWaitingForInput = false;
 
 			CurrentLineNumber = 0;
 
@@ -73,7 +71,7 @@ namespace PM
 		{
 			if (IsUserPaused) return;
 
-			if (WalkerRunning && !IsSleeping && !IsWaitingForInput)
+			if (WalkerRunning && !IsSleeping)
 			{
 				if (doEndWalker)
 				{
@@ -109,7 +107,7 @@ namespace PM
 		{
 			sleepTimer += Time.deltaTime;
 			float firstInterval = sleepTime - sleepTime / 20;
-			if (sleepTimer > firstInterval && !IsWaitingForInput)
+			if (sleepTimer > firstInterval && !Runtime.CodeWalker.isWaitingForUserInput)
 			{
 				IDELineMarker.instance.SetState(IDELineMarker.State.Hidden);
 				if (sleepTimer > sleepTime)
@@ -124,7 +122,7 @@ namespace PM
 
 		#region Compiler Methodes
 		//Methods that the CC should be able to call.
-		//We link this to the CC by passing them into the "Runtime.CodeWalker.CompileCode" method
+		//We link this to the CC by passing them into the "Runtime.CodeWalker.initCodeWalker" method
 		public static void EndWalker()
 		{
 			doEndWalker = true;
@@ -135,13 +133,12 @@ namespace PM
 			WalkerRunning = false;
 		}
 
-		public static void TriggerInput(Action<string, Scope> temp, Scope currentScope)
+		public static void LinkInputSubmitter(Action<string, Scope> submitInput, Scope currentScope)
 		{
-			Temp = temp;
+			SubmitInput = submitInput;
 			CurrentScope = currentScope;
 		}
 		#endregion
-
 
 
 		#region Public Methods
