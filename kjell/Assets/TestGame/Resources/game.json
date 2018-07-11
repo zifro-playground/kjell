@@ -2,6 +2,10 @@
 	"activeLevels": [
     {
       "sceneName": "Scene1",
+      "levelId": "aaa"
+    },
+	  {
+      "sceneName": "Scene1",
       "levelId": "glk"
     },
     {
@@ -31,65 +35,84 @@
 					"RandintFunction"
 				]
 			},
-			"levels": [
-				{
-					"id": "efg",
-					"levelSettings": {
-						"startCode": "x = 0\nif x == 0:\n\tprint(\"Hej!\")\nelse:\n\tprint(\"Hej!\")\nx = input(\"Vad?\")\nprint(x)",
-						"rowLimit": 30,
-						"taskDescription": {
-							"header": "Prata med programmet.",
-							"body": "Här är en mer utförlig beskrivning..."
-						}
-					}
-				},
-				{
-					"id": "abc",
-					"levelSettings": {
-						"startCode": "print(\"Hej!\")\nålder = int(input(\"Hur gammal är du?\"))\nprint(\"Du är\", ålder)",
-						"rowLimit": 30,
-						"taskDescription": {
-							"header": "Prata med programmet.",
-							"body": "Här är en mer utförlig beskrivning..."
-						}
-					}
-				},
-				{
-					"id": "bcd",
-					"levelSettings": {
-						"startCode": "print(6)\nnamn = input(\"Vad?\")\nprint(\"Hej \" + namn)",
-						"rowLimit": 30,
-						"taskDescription": {
-							"header": "Prata med programmet.",
-							"body": "Här är en mer utförlig beskrivning..."
-						}
-					},
-					"cases": [
-						{
-						},
-						{
-							"caseDefinition": {
-								"test": {
-									"input": [ "4", "8" ],
-									"output": [ "12" ]
-								}
-							}
-						}
-					]
-				},
-				{
-					"id": "cde",
-					"levelSettings": {
-						"startCode": "print(6)\nnamn = input(\"Vad?\")\nprint(\"Hej \" + namn)",
-						"rowLimit": 30,
-						"taskDescription": {
-							"header": "Prata med programmet.",
-							"body": "Här är en mer utförlig beskrivning..."
-						}
-					}
-				},
-				{
-					"id": "glk",
+      "levels":
+      [
+        {
+          "id": "efg",
+          "levelSettings":
+          {
+            "startCode": "x = 0\nif x == 0:\n\tprint(\"Hej!\")\nelse:\n\tprint(\"Hej!\")\nx = input(\"Vad?\")\nprint(x)",
+            "rowLimit": 30,
+            "taskDescription":
+            {
+              "header": "Prata med programmet.",
+              "body": "Här är en mer utförlig beskrivning..."
+            }
+          }
+        },
+        {
+          "id": "abc",
+          "levelSettings":
+          {
+            "startCode": "print(\"Hej!\")\nålder = int(input(\"Hur gammal är du?\"))\nprint(\"Du är\", ålder)",
+            "rowLimit": 30,
+            "taskDescription":
+            {
+              "header": "Prata med programmet.",
+              "body": "Här är en mer utförlig beskrivning..."
+            }
+          }
+        },
+        {
+          "id": "bcd",
+          "levelSettings":
+          {
+            "startCode": "print(6)\nnamn = input(\"Vad?\")\nprint(\"Hej \" + namn)",
+            "rowLimit": 30,
+            "taskDescription":
+            {
+              "header": "Prata med programmet.",
+              "body": "Här är en mer utförlig beskrivning..."
+            }
+          },
+          "cases":
+          [
+            {
+            },
+            {
+              "caseDefinition":
+              {
+                "test":
+                {
+                  "input":
+                  [
+                    "4",
+                    "8"
+                  ],
+                  "output":
+                  [
+                    "12"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "cde",
+          "levelSettings":
+          {
+            "startCode": "print(6)\nnamn = input(\"Vad?\")\nprint(\"Hej \" + namn)",
+            "rowLimit": 30,
+            "taskDescription":
+            {
+              "header": "Prata med programmet.",
+              "body": "Här är en mer utförlig beskrivning..."
+            }
+          }
+        },
+        {
+          "id": "glk",
           "levelSettings":
           {
             "startCode": "x = int(input(\"Vad?\"))\nx = int(\"12\")",
@@ -100,8 +123,21 @@
               "body": "Här är en mer utförlig beskrivning..."
             }
           }
-				}
-			]
+        },
+        {
+          "id": "aaa",
+          "levelSettings":
+          {
+            "startCode": "x = 2*-2",
+            "rowLimit": 30,
+            "taskDescription":
+            {
+              "header": "Prata med programmet.",
+              "body": "Här är en mer utförlig beskrivning..."
+            }
+          }
+        }
+      ]
 		}
 	]
 }

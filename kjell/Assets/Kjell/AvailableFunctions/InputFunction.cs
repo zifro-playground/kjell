@@ -21,9 +21,9 @@ public class InputFunction : Function
 		if (inputParas.Length > 0)
 		{
 			if (inputParas[0].variableType == VariableTypes.number)
-				PMWrapper.RaiseError("Fel datatyp. Input kan bara ta in en sträng men fick in ett tal.");
+				inputLabel = inputParas[0].getNumber().ToString();
 			else if (inputParas[0].variableType == VariableTypes.boolean)
-				PMWrapper.RaiseError("Fel datatyp. Input kan bara ta in en sträng men fick in ett boolskt värde.");
+				inputLabel = inputParas[0].getBool().ToString();
 			else
 				inputLabel = inputParas[0].getString();
 		}
