@@ -6,6 +6,7 @@ namespace Kjell
 {
 	public class InputValue : MonoBehaviour
 	{
+		private bool hasBeenSubmitted;
 		public Text SubmittedText;
 
 		public InputField InputField;
@@ -19,12 +20,15 @@ namespace Kjell
 		{
 			if (Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown(KeyCode.Return))
 			{
-				SubmitInput();
+				if(!hasBeenSubmitted)
+					SubmitInput();
 			}
 		}
 
 		public void SubmitInput()
-        {
+		{
+			hasBeenSubmitted = true;
+
 			if (!string.IsNullOrEmpty(InputField.text))
 				SubmittedText.text = InputField.text;
 
