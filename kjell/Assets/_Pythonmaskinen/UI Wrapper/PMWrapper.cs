@@ -1,9 +1,7 @@
 using PM;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Runtime;
 using UnityEngine;
 using CodeWalker = PM.CodeWalker;
 
@@ -18,6 +16,14 @@ public static class PMWrapper
 	/// Version of the Pythonmachine wrapper/UI.
 	/// </summary>
 	public const string Version = "1.2.0";
+
+	/// <summary>
+	/// Tells which mode the level is currently running. See <see cref="PM.LevelMode"/> for avaliable modes.
+	/// </summary>
+	public static LevelMode LevelMode
+	{
+		get { return LevelModeController.Instance.LevelMode; }
+	}
 
 	/// <summary>
 	/// Value from the speed slider. Ranges from 0 to 1, with a default of 0.5.

@@ -113,7 +113,16 @@
 							"body": "Här är en mer utförlig beskrivning..."
 						}
 					},
+					"sandbox": {},
 					"cases": [
+						{
+							"caseDefinition": {
+								"test": {
+									"output": [ "hej" ],
+									"input": [ "hejsan!" ]
+								}
+							}
+						},
 						{
 							"caseDefinition": {
 								"test": {
