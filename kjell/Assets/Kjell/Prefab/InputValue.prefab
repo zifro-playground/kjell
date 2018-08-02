@@ -233,7 +233,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SubmittedText: {fileID: 114802485120663558}
   InputText: {fileID: 114476708276098002}
-  InputField: {fileID: 1532355277772402}
+  InputField: {fileID: 114946317772435468}
+  InputFieldBase: {fileID: 1532355277772402}
   SendButton: {fileID: 1436155195473046}
   BubbleImage: {fileID: 114856438145870914}
 --- !u!114 &114157725511671920

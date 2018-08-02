@@ -7,9 +7,10 @@ namespace Kjell
 	public class InputValue : MonoBehaviour
 	{
 		public Text SubmittedText;
-		public Text InputText;
 
-		public GameObject InputField;
+		public InputField InputField;
+
+		public GameObject InputFieldBase;
 		public GameObject SendButton;
 
 		public Image BubbleImage;
@@ -24,10 +25,10 @@ namespace Kjell
 
 		public void SubmitInput()
         {
-			if (!string.IsNullOrEmpty(InputText.text))
-				SubmittedText.text = InputText.text;
+			if (!string.IsNullOrEmpty(InputField.text))
+				SubmittedText.text = InputField.text;
 
-            InputField.SetActive(false);
+            InputFieldBase.SetActive(false);
             SendButton.SetActive(false);
             SubmittedText.gameObject.SetActive(true);
 
@@ -38,8 +39,8 @@ namespace Kjell
 		{
 			foreach (var character in message)
 			{
-				InputField.GetComponent<InputField>().text += character;
-				InputField.GetComponent<InputField>().caretPosition = message.Length;
+				InputField.text += character;
+				InputField.caretPosition = message.Length;
 
 				yield return new WaitForSeconds((1 - PMWrapper.speedMultiplier) * 0.4f);
 			}
@@ -51,10 +52,10 @@ namespace Kjell
 
 		public void DeactivateInputValue()
 		{
-			if (!string.IsNullOrEmpty(InputText.text))
-				SubmittedText.text = InputText.text;
+			if (!string.IsNullOrEmpty(InputField.text))
+				SubmittedText.text = InputField.text;
 
-			InputField.SetActive(false);
+			InputFieldBase.SetActive(false);
 			SendButton.SetActive(false);
 			SubmittedText.gameObject.SetActive(true);
 		}
