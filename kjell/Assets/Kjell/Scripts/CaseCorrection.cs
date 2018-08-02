@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using ErrorHandler;
 using Kjell;
 using PM;
 using UnityEngine;
@@ -17,8 +17,10 @@ public class CaseCorrection : MonoBehaviour, IPMCaseSwitched, IPMCompilerStopped
 
 	private static string errorMessage;
 
-	public static void NextInput(GameObject inputValueObject)
+	public static IEnumerator NextInput(GameObject inputValueObject)
 	{
+		yield return new WaitForSeconds((1 - PMWrapper.speedMultiplier) * 2);
+
 		if (hasTestDefined)
 		{
 			if (inputs == null || inputs.Count == 0)
@@ -30,7 +32,7 @@ public class CaseCorrection : MonoBehaviour, IPMCaseSwitched, IPMCompilerStopped
 			else
 			{
 				var nextInput = inputs[inputIndex];
-				inputValueObject.GetComponent<InputValue>().SubmitInput(nextInput);
+				IOStream.Instance.StartCoroutine(inputValueObject.GetComponent<InputValue>().StartInputAnimation(nextInput));
 				inputIndex++;
 			}
 		}

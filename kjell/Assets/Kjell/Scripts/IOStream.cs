@@ -59,7 +59,7 @@ namespace Kjell
 			valueObject.GetComponent<InputValue>().BubbleImage.sprite = InputValuePop;
 			valueObject.GetComponent<InputValue>().InputField.GetComponent<InputField>().Select();
 
-			CaseCorrection.NextInput(valueObject);
+			StartCoroutine(CaseCorrection.NextInput(valueObject));
 		}
 
 		public void InputSubmitted(string submitedText)

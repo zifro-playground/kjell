@@ -1,4 +1,4 @@
-﻿using PM;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -34,15 +34,19 @@ namespace Kjell
             IOStream.Instance.InputSubmitted(SubmittedText.text);
         }
 
-		public void SubmitInput(string message)
+		public IEnumerator StartInputAnimation(string message)
 		{
-			SubmittedText.text = message;
-			InputText.text = message;
-			InputField.SetActive(false);
-			SendButton.SetActive(false);
-			SubmittedText.gameObject.SetActive(true);
+			foreach (var character in message)
+			{
+				InputField.GetComponent<InputField>().text += character;
+				InputField.GetComponent<InputField>().caretPosition = message.Length;
 
-			IOStream.Instance.InputSubmitted(SubmittedText.text);
+				yield return new WaitForSeconds((1 - PMWrapper.speedMultiplier) * 0.4f);
+			}
+
+			yield return new WaitForSeconds((1 - PMWrapper.speedMultiplier) * 2);
+
+			SubmitInput();
 		}
 
 		public void DeactivateInputValue()
