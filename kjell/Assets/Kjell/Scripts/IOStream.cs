@@ -57,7 +57,7 @@ namespace Kjell
 			valueObject = Instantiate(ValuePrefab);
 			valueObject.transform.SetParent(gameObject.transform, false);
 			valueObject.GetComponent<InputValue>().BubbleImage.sprite = InputValuePop;
-			valueObject.GetComponent<InputValue>().InputField.GetComponent<InputField>().Select();
+			valueObject.GetComponent<InputValue>().InputFieldBase.GetComponent<InputField>().Select();
 
 			StartCoroutine(CaseCorrection.NextInput(valueObject));
 		}
