@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using PM;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 namespace Kjell
@@ -56,6 +57,7 @@ namespace Kjell
 			valueObject = Instantiate(ValuePrefab);
 			valueObject.transform.SetParent(gameObject.transform, false);
 			valueObject.GetComponent<InputValue>().BubbleImage.sprite = InputValuePop;
+			valueObject.GetComponent<InputValue>().InputField.GetComponent<InputField>().Select();
 
 			CaseCorrection.NextInput(valueObject);
 		}
