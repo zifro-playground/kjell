@@ -36,6 +36,8 @@ namespace Kjell
             SendButton.SetActive(false);
             SubmittedText.gameObject.SetActive(true);
 
+			GetComponent<Container>().SetWidth(InputField.text.Length);
+
             IOStream.Instance.InputSubmitted(SubmittedText.text);
         }
 

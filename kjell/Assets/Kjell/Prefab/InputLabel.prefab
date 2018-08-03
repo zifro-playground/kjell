@@ -21,7 +21,6 @@ GameObject:
   - component: {fileID: 224306699943348456}
   - component: {fileID: 222435946438968358}
   - component: {fileID: 114944644757028574}
-  - component: {fileID: 114418918643735770}
   - component: {fileID: 114928893441022916}
   - component: {fileID: 114453769690762998}
   - component: {fileID: 114843197448273170}
@@ -62,6 +61,7 @@ GameObject:
   - component: {fileID: 114100365161335762}
   - component: {fileID: 114378105918640896}
   - component: {fileID: 114048175860184946}
+  - component: {fileID: 114858578200489006}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -144,25 +144,6 @@ MonoBehaviour:
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 1
   m_ChildControlHeight: 1
---- !u!114 &114418918643735770
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1096856579346578}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1679637790, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_IgnoreLayout: 0
-  m_MinWidth: -1
-  m_MinHeight: -1
-  m_PreferredWidth: -1
-  m_PreferredHeight: 50
-  m_FlexibleWidth: -1
-  m_FlexibleHeight: -1
-  m_LayoutPriority: 1
 --- !u!114 &114453769690762998
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -188,7 +169,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TextTransform: {fileID: 224626579370028786}
-  LayoutElement: {fileID: 114418918643735770}
+  LayoutElement: {fileID: 114858578200489006}
+--- !u!114 &114858578200489006
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1705547548326152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1679637790, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreLayout: 0
+  m_MinWidth: -1
+  m_MinHeight: -1
+  m_PreferredWidth: -1
+  m_PreferredHeight: -1
+  m_FlexibleWidth: -1
+  m_FlexibleHeight: -1
+  m_LayoutPriority: 1
 --- !u!114 &114928893441022916
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -203,8 +203,8 @@ MonoBehaviour:
   m_Padding:
     m_Left: 15
     m_Right: 15
-    m_Top: 15
-    m_Bottom: 15
+    m_Top: 10
+    m_Bottom: 0
   m_ChildAlignment: 0
   m_Spacing: 0
   m_ChildForceExpandWidth: 0

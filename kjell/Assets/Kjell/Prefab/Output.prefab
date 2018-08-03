@@ -23,7 +23,6 @@ GameObject:
   - component: {fileID: 114566132133107990}
   - component: {fileID: 114327682668168546}
   - component: {fileID: 222533951294013048}
-  - component: {fileID: 114391856083440118}
   - component: {fileID: 114306212275538302}
   - component: {fileID: 114252546873491342}
   m_Layer: 5
@@ -45,6 +44,7 @@ GameObject:
   - component: {fileID: 114409539434388760}
   - component: {fileID: 114903690162513630}
   - component: {fileID: 114757584505580690}
+  - component: {fileID: 114592054281521536}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -95,7 +95,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TextTransform: {fileID: 224565912870675112}
-  LayoutElement: {fileID: 114391856083440118}
+  LayoutElement: {fileID: 114592054281521536}
 --- !u!114 &114327682668168546
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -136,25 +136,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114391856083440118
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1634430851464938}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1679637790, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_IgnoreLayout: 0
-  m_MinWidth: -1
-  m_MinHeight: -1
-  m_PreferredWidth: -1
-  m_PreferredHeight: 40
-  m_FlexibleWidth: -1
-  m_FlexibleHeight: -1
-  m_LayoutPriority: 1
 --- !u!114 &114409539434388760
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -229,14 +210,33 @@ MonoBehaviour:
   m_Padding:
     m_Left: 15
     m_Right: 15
-    m_Top: 15
-    m_Bottom: 15
+    m_Top: 10
+    m_Bottom: 0
   m_ChildAlignment: 0
   m_Spacing: 0
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 1
   m_ChildControlHeight: 1
+--- !u!114 &114592054281521536
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1647949619452158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1679637790, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreLayout: 0
+  m_MinWidth: -1
+  m_MinHeight: -1
+  m_PreferredWidth: -1
+  m_PreferredHeight: -1
+  m_FlexibleWidth: -1
+  m_FlexibleHeight: -1
+  m_LayoutPriority: 1
 --- !u!114 &114757584505580690
 MonoBehaviour:
   m_ObjectHideFlags: 1

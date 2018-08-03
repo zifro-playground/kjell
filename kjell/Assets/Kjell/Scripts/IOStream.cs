@@ -43,6 +43,7 @@ namespace Kjell
 			var output = outputObject.GetComponent<Output>();
 			message = message.Replace("\\n", "\n");
 			output.Text.text = message;
+			outputObject.GetComponent<Container>().SetWidth(message.Length);
 		}
 
 		public IEnumerator TriggerInput(string message)
@@ -51,9 +52,10 @@ namespace Kjell
 			labelObject.transform.SetParent(gameObject.transform, false);
 			labelObject.GetComponent<InputLabel>().Text.text = message;
 			labelObject.GetComponent<InputLabel>().BubbleImage.sprite = InputLabelPop;
+			labelObject.GetComponent<Container>().SetWidth(message.Length);
 
 			yield return new WaitForSeconds(2 * (1 - PMWrapper.speedMultiplier));
-
+			
 			valueObject = Instantiate(ValuePrefab);
 			valueObject.transform.SetParent(gameObject.transform, false);
 			valueObject.GetComponent<InputValue>().BubbleImage.sprite = InputValuePop;
