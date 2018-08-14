@@ -121,15 +121,7 @@
 						{
 							"caseDefinition": {
 								"test": {
-									"output": [ "hej" ],
-									"input": [ "hejsan!" ]
-								}
-							}
-						},
-						{
-							"caseDefinition": {
-								"test": {
-									"output": [ "hej" ],
+									"output": [ "hejsan!" ],
 									"input": [ "hejsan!" ]
 								}
 							}
