@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 namespace Kjell
 {
-	public class IOStream : MonoBehaviour, IPMCompilerStarted, IPMLevelChanged, IPMCompilerStopped//, IPMLineParsed, IPMActivateWalker
+	public class IOStream : MonoBehaviour, IPMCompilerStarted, IPMLevelChanged, IPMCompilerStopped, IPMCaseSwitched, IPMSwitchedToSandbox
 	{
 		public string LatestReadInput;
 
@@ -110,6 +110,17 @@ namespace Kjell
 		{
 			DeactivateLastInput();
 			StopAllCoroutines();
+		}
+
+		public void OnPMCaseSwitched(int caseNumber)
+		{
+			DeactivateLastInput();
+			Clear();
+		}
+
+		public void OnPMSwitchedToSandbox()
+		{
+			Clear();
 		}
 	}
 }

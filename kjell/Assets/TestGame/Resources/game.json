@@ -72,9 +72,8 @@
 							"body": "Här är en mer utförlig beskrivning..."
 						}
 					},
+					"sandbox": {},
 					"cases": [
-						{
-						},
 						{
 							"caseDefinition": {
 								"test": {
