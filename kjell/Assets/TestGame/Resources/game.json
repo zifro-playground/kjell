@@ -2,6 +2,10 @@
 	"activeLevels": [
 		{
 			"sceneName": "Scene1",
+			"levelId": "tete"
+		},
+		{
+			"sceneName": "Scene1",
 			"levelId": "aaa"
 		},
 		{
@@ -110,6 +114,36 @@
 						"rowLimit": 30,
 						"taskDescription": {
 							"header": "Prata med programmet.",
+							"body": "Här är en mer utförlig beskrivning..."
+						}
+					},
+					"sandbox": {},
+					"cases": [
+						{
+							"caseDefinition": {
+								"test": {
+									"output": [ "hej" ],
+									"input": [ "hejsan!" ]
+								}
+							}
+						},
+						{
+							"caseDefinition": {
+								"test": {
+									"output": [ "hej" ],
+									"input": [ "hejsan!" ]
+								}
+							}
+						}
+					]
+				},
+				{
+					"id": "tete",
+					"levelSettings": {
+						"startCode": "for i in range(15):\n\tprint(\"Hej!\")\n\tålder = int(input(\"Hur gammal är du?\"))\n\tprint(\"Du är\", ålder)",
+						"rowLimit": 30,
+						"taskDescription": {
+							"header": "Prata med programmet många gånger.",
 							"body": "Här är en mer utförlig beskrivning..."
 						}
 					},
