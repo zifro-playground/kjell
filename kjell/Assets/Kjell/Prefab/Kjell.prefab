@@ -40,6 +40,7 @@ GameObject:
   - component: {fileID: 114806481346889882}
   - component: {fileID: 222197778540497704}
   - component: {fileID: 114398143747174564}
+  - component: {fileID: 114591491208451682}
   m_Layer: 5
   m_Name: Scroll View
   m_TagString: Untagged
@@ -124,7 +125,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 224088806356110506}
-  - component: {fileID: 114254765639085242}
   - component: {fileID: 222323733217132578}
   - component: {fileID: 114450049867118920}
   m_Layer: 5
@@ -204,13 +204,13 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.2509191, g: 0.28676468, b: 0.28676468, a: 0}
+  m_BackGroundColor: {r: 0.19971521, g: 0.2264151, b: 0.2264151, a: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.500625
-    y: 0.16063833
-    width: 0.4475
-    height: 0.63907194
+    x: 0.5006249
+    y: 0.13657333
+    width: 0.44744307
+    height: 0.6842701
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -307,18 +307,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114254765639085242
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1852600586562014}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1200242548, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ShowMaskGraphic: 0
 --- !u!114 &114398143747174564
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -432,6 +420,18 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Scrollbar+ScrollEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114591491208451682
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1103445324427266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1200242548, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShowMaskGraphic: 1
 --- !u!114 &114628790910012182
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -498,7 +498,7 @@ MonoBehaviour:
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
-  m_ScrollSensitivity: 1
+  m_ScrollSensitivity: 15
   m_Viewport: {fileID: 224088806356110506}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 114450252299209256}
@@ -614,7 +614,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -30, y: -90}
+  m_SizeDelta: {x: -30, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!224 &224212930359447024
 RectTransform:
@@ -631,7 +631,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 10, y: -152.81308}
+  m_AnchoredPosition: {x: 10, y: -153.76259}
   m_SizeDelta: {x: 475, y: 0}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!224 &224458726784665658
@@ -707,8 +707,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 44}
+  m_SizeDelta: {x: 0, y: -88}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224881085414607230
 RectTransform:
