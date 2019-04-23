@@ -1,7 +1,7 @@
 {
   "name": "se.zifro.kjell",
   "displayName": "Zifro Kjell UI",
-  "version": "0.0.0",
+  "version": "1.1.0",
   "unity": "2018.3.10",
   "description": "UI extension of Zifro Playground UI and is used in all Zifro Kjell games.\n\nRequires the Zifro Mellis Compiler and Zifro Playground UI.\nAdd as dependency to your Packages/manifest.json:\n\n\"se.zifro.mellis\": \"https://github.com/zardan/compiler.git#upm\",\"se.zifro.ui\": \"https://github.com/zardan/ui.git#upm\",",
   "keywords": [
