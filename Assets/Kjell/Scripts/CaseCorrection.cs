@@ -21,7 +21,7 @@ public class CaseCorrection : MonoBehaviour, IPMCaseSwitched, IPMTimeToCorrectCa
 	{
 		yield return new WaitForSeconds((1 - PMWrapper.speedMultiplier) * 2);
 
-		if (hasTestDefined && PMWrapper.LevelMode == LevelMode.Case)
+		if (hasTestDefined && PMWrapper.levelMode == LevelMode.Case)
 		{
 			if (inputs == null || inputs.Count == 0)
 				PMWrapper.RaiseTaskError("Jag förväntade mig inga inmatningar, så nu vet jag inte vad jag ska mata in.");
@@ -115,18 +115,22 @@ public class CaseCorrection : MonoBehaviour, IPMCaseSwitched, IPMTimeToCorrectCa
 
 	public void OnPMCaseSwitched(int caseNumber)
 	{
-		if (PMWrapper.LevelData.cases != null &&
-			PMWrapper.LevelData.cases.Count > 0 && 
-		    PMWrapper.LevelData.cases[caseNumber].caseDefinition != null && 
-		    PMWrapper.LevelData.cases[caseNumber].caseDefinition.test != null)
-		{
-			hasTestDefined = true;
+        Level currentLevel = PMWrapper.currentLevel;
+
+        if (currentLevel.cases != null &&
+            caseNumber < currentLevel.cases.Count &&
+            currentLevel.cases[caseNumber].caseDefinition != null &&
+            ((KjellCaseDefinition)currentLevel.cases[caseNumber].caseDefinition).test != null)
+        {
+	        var caseDefinition = (KjellCaseDefinition) currentLevel.cases[caseNumber].caseDefinition;
+
+            hasTestDefined = true;
 
 			inputIndex = 0;
-			inputs = PMWrapper.LevelData.cases[caseNumber].caseDefinition.test.input;
+            inputs = caseDefinition.test.input;
 
 			outputIndex = 0;
-			outputs = PMWrapper.LevelData.cases[caseNumber].caseDefinition.test.output;
+            outputs = caseDefinition.test.output;
 
 			if (outputs == null || outputs.Count == 0)
 				throw new Exception("There is a test defined but no output defined.");

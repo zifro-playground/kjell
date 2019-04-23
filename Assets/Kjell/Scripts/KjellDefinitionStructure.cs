@@ -6,7 +6,7 @@ public class Test
 	public List<string> output { get; set; }
 }
 
-public partial class CaseDefinition
+public class KjellCaseDefinition : CaseDefinition
 {
 	public Test test { get; set; }
 }
