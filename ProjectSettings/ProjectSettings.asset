@@ -585,7 +585,7 @@ PlayerSettings:
   facebookStatus: 1
   facebookXfbml: 0
   facebookFrictionlessRequests: 1
-  apiCompatibilityLevel: 2
+  apiCompatibilityLevel: 6
   cloudProjectId: d3fa0850-1b2a-4b4a-aa67-12b92024c1bd
   framebufferDepthMemorylessMode: 0
   projectName: Kjell UI
