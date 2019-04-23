@@ -540,6 +540,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4700158362250842}
   - component: {fileID: 5642125438315329647}
+  - component: {fileID: 6215984951748652136}
   m_Layer: 0
   m_Name: Kjell
   m_TagString: Untagged
@@ -575,6 +576,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 818b6a16f69548d40abb35e18e655a74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6215984951748652136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1639223072385384}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a711f6bb7614c24fb5fab728d0686f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  updatesProjectVersion: 1
 --- !u!1 &1852600586562014
 GameObject:
   m_ObjectHideFlags: 0
