@@ -72,9 +72,8 @@ namespace Kjell
 				labelObject.GetComponent<InputLabel>().BubbleImage.sprite = InputLabelPlain;
 
 			valueObject.GetComponent<InputValue>().BubbleImage.sprite = InputValuePlain;
-
-			CodeWalker.SubmitInput.Invoke(submitedText, CodeWalker.CurrentScope);
-			PMWrapper.UnpauseWalker();
+			
+			PMWrapper.ResolveYield(submitedText);
 		}
 
 		private void Clear()
@@ -106,7 +105,7 @@ namespace Kjell
 			Clear();
 		}
 
-		public void OnPMCompilerStopped(HelloCompiler.StopStatus status)
+		public void OnPMCompilerStopped(StopStatus status)
 		{
 			DeactivateLastInput();
 			StopAllCoroutines();

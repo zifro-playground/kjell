@@ -6,6 +6,8 @@
     "com.unity.package-manager-ui": "2.0.7",
     "com.unity.purchasing": "2.0.3",
     "com.unity.textmeshpro": "1.3.0",
+    "se.zifro.mellis": "ssh://git@github.com/zardan/compiler.git#upm",
+    "se.zifro.ui": "ssh://git@github.com/zardan/ui.git#upm",
     "com.unity.modules.ai": "1.0.0",
     "com.unity.modules.animation": "1.0.0",
     "com.unity.modules.assetbundle": "1.0.0",
@@ -36,5 +38,15 @@
     "com.unity.modules.vr": "1.0.0",
     "com.unity.modules.wind": "1.0.0",
     "com.unity.modules.xr": "1.0.0"
+  },
+  "lock": {
+    "se.zifro.mellis": {
+      "hash": "d64ceabfaee1b59c81069ae016c664a8d592eef3",
+      "revision": "upm"
+    },
+    "se.zifro.ui": {
+      "hash": "a123654607da4132c4a787bb908f1212ddcc9c67",
+      "revision": "upm"
+    }
   }
 }
