@@ -22,20 +22,21 @@ namespace Kjell
 		[FormerlySerializedAs("SubmittedText")]
 		public Text submittedText;
 
+		public GameObject enableOnSubmit;
+		public GameObject[] destroyOnSubmit;
+
 		bool hasBeenSubmitted;
 
 		public void SubmitInput()
 		{
-			hasBeenSubmitted = true;
-
-			if (!string.IsNullOrEmpty(inputField.text))
+			if (hasBeenSubmitted)
 			{
-				submittedText.text = inputField.text;
+				return;
 			}
 
-			inputFieldBase.SetActive(false);
-			sendButton.SetActive(false);
-			submittedText.gameObject.SetActive(true);
+			hasBeenSubmitted = true;
+
+			DeactivateInputValue();
 
 			GetComponent<Container>().SetWidth(inputField.text.Length);
 
@@ -64,9 +65,11 @@ namespace Kjell
 				submittedText.text = inputField.text;
 			}
 
-			inputFieldBase.SetActive(false);
-			sendButton.SetActive(false);
-			submittedText.gameObject.SetActive(true);
+			enableOnSubmit.SetActive(true);
+			foreach (GameObject go in destroyOnSubmit)
+			{
+				Destroy(go);
+			}
 		}
 
 		void Update()
