@@ -1,42 +1,35 @@
-﻿using System.Linq;
-using Compiler;
+﻿using System.Globalization;
+using System.Linq;
+using System.Text;
 using Kjell;
+using Mellis;
+using Mellis.Core.Interfaces;
 
-public class PrintFunction : Function
+public class PrintFunction : ClrFunction
 {
-	public PrintFunction()
+	public PrintFunction() : base("print")
 	{
-		name = "print";
-		buttonText = "print()";
-		pauseWalker = false;
-		hasReturnVariable = false;
-
-		for (int i = 0; i < 20; i++)
-			inputParameterAmount.Add(i);
 	}
 
-	public override Variable runFunction(Scope currentScope, Variable[] inputParas, int lineNumber)
+	public override IScriptType Invoke(params IScriptType[] arguments)
 	{
-		var message = "";
+		var builder = new StringBuilder();
 
-		var index = 0;
-		foreach (var parameter in inputParas)
+		foreach (IScriptType arg in arguments)
 		{
-			if (parameter.variableType == VariableTypes.textString)
-				message += parameter.getString();
-			else if (parameter.variableType == VariableTypes.number)
-				message += parameter.getNumber();
-			else if (parameter.variableType == VariableTypes.boolean)
-				message += parameter.getBool();
+			if (builder.Length > 0)
+				builder.Append(' ');
 
-			if (index < inputParas.Length-1)
-				message += " ";
-
-			index++;
+			if (arg.TryConvert(out string s))
+				builder.Append(s);
+			else if (arg.TryConvert(out double d))
+				builder.Append(d.ToString(CultureInfo.InvariantCulture));
+			else if (arg.TryConvert(out bool b))
+				builder.Append(b);
 		}
 
-		IOStream.Instance.Print(message);
+		IOStream.Instance.Print(builder.ToString());
 
-		return new Variable();
+		return null;
 	}
 }
