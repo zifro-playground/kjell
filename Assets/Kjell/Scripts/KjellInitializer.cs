@@ -1,16 +1,18 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using Kjell.AvailableFunctions;
 using PM;
 using UnityEngine;
 
-public class KjellInitializer : MonoBehaviour
+namespace Kjell
 {
-    private void Awake()
-    {
-        Main.RegisterFunction(new InputFunction());
-        Main.RegisterFunction(new PrintFunction());
-        Main.RegisterFunction(new RandintFunction());
+	public class KjellInitializer : MonoBehaviour
+	{
+		void Awake()
+		{
+			Main.RegisterFunction(new InputFunction());
+			Main.RegisterFunction(new PrintFunction());
+			Main.RegisterFunction(new RandintFunction());
 
-        Main.RegisterCaseDefinitionContract<KjellCaseDefinition>();
-    }
+			Main.RegisterCaseDefinitionContract<KjellCaseDefinition>();
+		}
+	}
 }

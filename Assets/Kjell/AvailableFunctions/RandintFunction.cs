@@ -2,30 +2,39 @@
 using Mellis.Core.Interfaces;
 using UnityEngine;
 
-public class RandintFunction : ClrFunction
+namespace Kjell.AvailableFunctions
 {
-	public RandintFunction() : base("randint")
+	public class RandintFunction : ClrFunction
 	{
-	}
-
-	public override IScriptType Invoke(params IScriptType[] arguments)
-	{
-		if (arguments.Length < 2)
+		public RandintFunction() : base("randint")
 		{
-			PMWrapper.RaiseError("Fel datatyp. Parametrarna till randint får bara vara heltal.");
 		}
 
-		if (!arguments[0].TryConvert(out int start))
-			PMWrapper.RaiseError("Fel datatyp. Parametrarna till randint får bara vara heltal.");
+		public override IScriptType Invoke(params IScriptType[] arguments)
+		{
+			if (arguments.Length < 2)
+			{
+				PMWrapper.RaiseError("Fel datatyp. Parametrarna till randint får bara vara heltal.");
+			}
 
-		if (!arguments[1].TryConvert(out int end))
-			PMWrapper.RaiseError("Fel datatyp. Parametrarna till randint får bara vara heltal.");
+			if (!arguments[0].TryConvert(out int start))
+			{
+				PMWrapper.RaiseError("Fel datatyp. Parametrarna till randint får bara vara heltal.");
+			}
 
-		if (start > end)
-			PMWrapper.RaiseError("Fel i parametrarna till randint. Första parametern ska vara mindre än den andra");
+			if (!arguments[1].TryConvert(out int end))
+			{
+				PMWrapper.RaiseError("Fel datatyp. Parametrarna till randint får bara vara heltal.");
+			}
 
-		int randomNumber = Random.Range(start, end + 1);
+			if (start > end)
+			{
+				PMWrapper.RaiseError("Fel i parametrarna till randint. Första parametern ska vara mindre än den andra");
+			}
 
-		return Processor.Factory.Create(randomNumber);
+			int randomNumber = Random.Range(start, end + 1);
+
+			return Processor.Factory.Create(randomNumber);
+		}
 	}
 }

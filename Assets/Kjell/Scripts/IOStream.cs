@@ -1,107 +1,55 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using PM;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
-
 
 namespace Kjell
 {
-	public class IOStream : MonoBehaviour, IPMCompilerStarted, IPMLevelChanged, IPMCompilerStopped, IPMCaseSwitched, IPMSwitchedToSandbox
+	public class IOStream : MonoBehaviour, IPMCompilerStarted, IPMLevelChanged, IPMCompilerStopped, IPMCaseSwitched,
+		IPMSwitchedToSandbox
 	{
-		public string LatestReadInput;
+		public static IOStream instance;
 
-		public GameObject PrintPrefab;
-		public GameObject LabelPrefab;
-		public GameObject ValuePrefab;
+		[FormerlySerializedAs("InputLabelPlain")]
+		public Sprite inputLabelPlain;
 
-		public Sprite InputLabelPop;
-		public Sprite InputValuePop;
-		public Sprite InputLabelPlain;
-		public Sprite InputValuePlain;
+		[FormerlySerializedAs("InputLabelPop")]
+		public Sprite inputLabelPop;
 
-		private GameObject labelObject;
-		private GameObject valueObject;
+		[FormerlySerializedAs("InputValuePlain")]
+		public Sprite inputValuePlain;
 
-		public Dictionary<int, string> LinesWithInput;
+		[FormerlySerializedAs("InputValuePop")]
+		public Sprite inputValuePop;
 
-		public static IOStream Instance;
+		[FormerlySerializedAs("LabelPrefab")]
+		public GameObject labelPrefab;
 
-		private void Start()
+		[FormerlySerializedAs("LatestReadInput")]
+		public string latestReadInput;
+
+		[FormerlySerializedAs("LinesWithInput")]
+		public Dictionary<int, string> linesWithInput;
+
+		[FormerlySerializedAs("PrintPrefab")]
+		public GameObject printPrefab;
+
+		[FormerlySerializedAs("ValuePrefab")]
+		public GameObject valuePrefab;
+
+		GameObject labelObject;
+		GameObject valueObject;
+
+		public void OnPMCaseSwitched(int caseNumber)
 		{
-			if (Instance == null)
-				Instance = this;
-		}
-
-		public void Print(string message)
-		{
-			CaseCorrection.NextOutput(message);
-
-			var outputObject = Instantiate(PrintPrefab);
-			outputObject.transform.SetParent(gameObject.transform, false);
-			var output = outputObject.GetComponent<Output>();
-			message = message.Replace("\\n", "\n");
-			output.Text.text = message;
-			outputObject.GetComponent<Container>().SetWidth(message.Length);
-		}
-
-		public IEnumerator TriggerInput(string message)
-		{
-			labelObject = Instantiate(LabelPrefab);
-			labelObject.transform.SetParent(gameObject.transform, false);
-			labelObject.GetComponent<InputLabel>().Text.text = message;
-			labelObject.GetComponent<InputLabel>().BubbleImage.sprite = InputLabelPop;
-			labelObject.GetComponent<Container>().SetWidth(message.Length);
-
-			yield return new WaitForSeconds(2 * (1 - PMWrapper.speedMultiplier));
-			
-			valueObject = Instantiate(ValuePrefab);
-			valueObject.transform.SetParent(gameObject.transform, false);
-			valueObject.GetComponent<InputValue>().BubbleImage.sprite = InputValuePop;
-			valueObject.GetComponent<InputValue>().InputFieldBase.GetComponent<InputField>().Select();
-
-			StartCoroutine(CaseCorrection.NextInput(valueObject));
-		}
-
-		public void InputSubmitted(string submitedText)
-		{
-			LatestReadInput = submitedText;
-
-			if (labelObject != null)
-				labelObject.GetComponent<InputLabel>().BubbleImage.sprite = InputLabelPlain;
-
-			valueObject.GetComponent<InputValue>().BubbleImage.sprite = InputValuePlain;
-			
-			PMWrapper.ResolveYield(submitedText);
-		}
-
-		private void Clear()
-		{
-			foreach (Transform child in transform)
-			{
-				Destroy(child.gameObject);
-			}
-		}
-
-		private void DeactivateLastInput()
-		{
-			if (gameObject.transform.childCount > 0)
-			{
-				var inputValue = gameObject.transform.GetChild(gameObject.transform.childCount - 1).gameObject.GetComponent<InputValue>();
-				if (inputValue != null)
-					inputValue.DeactivateInputValue();
-			}
+			DeactivateLastInput();
+			Clear();
 		}
 
 		public void OnPMCompilerStarted()
 		{
-			Clear();
-		}
-
-		public void OnPMLevelChanged()
-		{
-			DeactivateLastInput();
 			Clear();
 		}
 
@@ -111,7 +59,7 @@ namespace Kjell
 			StopAllCoroutines();
 		}
 
-		public void OnPMCaseSwitched(int caseNumber)
+		public void OnPMLevelChanged()
 		{
 			DeactivateLastInput();
 			Clear();
@@ -120,6 +68,76 @@ namespace Kjell
 		public void OnPMSwitchedToSandbox()
 		{
 			Clear();
+		}
+
+		public void Print(string message)
+		{
+			CaseCorrection.NextOutput(message);
+
+			GameObject outputObject = Instantiate(printPrefab, gameObject.transform, false);
+			Output output = outputObject.GetComponent<Output>();
+			message = message.Replace("\\n", "\n");
+			output.text.text = message;
+			outputObject.GetComponent<Container>().SetWidth(message.Length);
+		}
+
+		public IEnumerator TriggerInput(string message)
+		{
+			labelObject = Instantiate(labelPrefab, gameObject.transform, false);
+			labelObject.GetComponent<InputLabel>().text.text = message;
+			labelObject.GetComponent<InputLabel>().bubbleImage.sprite = inputLabelPop;
+			labelObject.GetComponent<Container>().SetWidth(message.Length);
+
+			yield return new WaitForSeconds(2 * (1 - PMWrapper.speedMultiplier));
+
+			valueObject = Instantiate(valuePrefab, gameObject.transform, false);
+			valueObject.GetComponent<InputValue>().bubbleImage.sprite = inputValuePop;
+			valueObject.GetComponent<InputValue>().inputFieldBase.GetComponent<InputField>().Select();
+
+			StartCoroutine(CaseCorrection.NextInput(valueObject));
+		}
+
+		public void InputSubmitted(string submittedText)
+		{
+			latestReadInput = submittedText;
+
+			if (labelObject != null)
+			{
+				labelObject.GetComponent<InputLabel>().bubbleImage.sprite = inputLabelPlain;
+			}
+
+			valueObject.GetComponent<InputValue>().bubbleImage.sprite = inputValuePlain;
+
+			PMWrapper.ResolveYield(submittedText);
+		}
+
+		void Start()
+		{
+			if (instance == null)
+			{
+				instance = this;
+			}
+		}
+
+		void Clear()
+		{
+			foreach (Transform child in transform)
+			{
+				Destroy(child.gameObject);
+			}
+		}
+
+		void DeactivateLastInput()
+		{
+			if (gameObject.transform.childCount > 0)
+			{
+				InputValue inputValue = gameObject.transform.GetChild(gameObject.transform.childCount - 1).gameObject
+					.GetComponent<InputValue>();
+				if (inputValue != null)
+				{
+					inputValue.DeactivateInputValue();
+				}
+			}
 		}
 	}
 }
